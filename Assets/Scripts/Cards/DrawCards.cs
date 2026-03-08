@@ -3,67 +3,68 @@ using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
-using static UnityEngine.Rendering.DebugUI;
 
 public class DrawCards : MonoBehaviour
 {
     [Header("Draw settings")]
-    public GameObject cardPrefab;
-    public XRDirectInteractor handInteractor; 
-    public string deckTag = "Deck";
-    public InputActionProperty gripValue;
+    public DeckManager deckManager;          // Reference to the deck manager
+    public XRDirectInteractor handInteractor; // The player's hand interactor
+    public string deckTag = "Deck";          // Tag used to identify the deck object
+    public InputActionProperty gripValue;    // Grip input from XR controller
 
-    private bool touchingDeck;
-    private bool cardIsSpawned = false;
-    private GameObject spawnedCard;
+    private bool touchingDeck;               // True if the hand is currently touching the deck
+    private bool cardIsSpawned = false;      // Stops multiple cards spawning from one press
+    private GameObject spawnedCard;          // Stores the card that was just created
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        // If hand is touching the deck, grip is pressed, and no card currently spawned -> draw a card
         if (touchingDeck && gripValue.action.IsPressed() && !cardIsSpawned)
         {
-            cardIsSpawned=true;
+            cardIsSpawned = true;
             SpawnCard();
         }
-        if(gripValue.action.WasReleasedThisFrame())
+
+        // Reset card spawn lock when grip is released
+        if (gripValue.action.WasReleasedThisFrame())
         {
-            cardIsSpawned=false;
+            cardIsSpawned = false;
         }
     }
 
     void SpawnCard()
     {
-        //spawns card
+        // Ask DeckManager for the next card prefab
+        GameObject cardPrefab = deckManager.DrawCard();
+
+        if (cardPrefab == null)
+            return;
+
+        // Spawn the card into the world
         spawnedCard = Instantiate(cardPrefab);
 
-        // Force grab using the new IXRSelectInteractor API (XRGrab interactable is obselete)
+        // Tell XR Interaction Toolkit to immediately place the spawned card into the player's hand
         IXRSelectInteractor interactor = handInteractor;
         IXRSelectInteractable interactable = spawnedCard.GetComponent<XRGrabInteractable>();
 
-        if (handInteractor.interactionManager != null)
+        if (handInteractor.interactionManager != null && interactable != null)
         {
             handInteractor.interactionManager.SelectEnter(interactor, interactable);
         }
     }
 
-    // Detect when hand touches the deck
     private void OnTriggerEnter(Collider other)
     {
+        // Detect when the player's hand touches the deck
         if (other.CompareTag(deckTag))
         {
             touchingDeck = true;
         }
     }
 
-    // Detect when hand stops touching the deck
     private void OnTriggerExit(Collider other)
     {
+        // Detect when the player's hand leaves the deck
         if (other.CompareTag(deckTag))
         {
             touchingDeck = false;
