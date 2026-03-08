@@ -87,7 +87,7 @@ public class CardProjectile : MonoBehaviour
     private void OnReleased(SelectExitEventArgs args)
     {
         // Check how fast the card is moving when released
-        float speed = rb.velocity.magnitude;
+        float speed = rb.linearVelocity.magnitude;
 
         // Only count as a throw if fast enough
         hasBeenThrown = speed >= minimumThrowSpeed;
@@ -279,8 +279,8 @@ public class CardProjectile : MonoBehaviour
         if (childRb != null)
         {
             // Crd velocity
-            Vector3 rotatedVelocity = Quaternion.Euler(0f, yAngleOffset, 0f) * rb.velocity;
-            childRb.velocity = rotatedVelocity * childVelocityMultiplier;
+            Vector3 rotatedVelocity = Quaternion.Euler(0f, yAngleOffset, 0f) * rb.linearVelocity;
+            childRb.linearVelocity = rotatedVelocity * childVelocityMultiplier;
             childRb.angularVelocity = rb.angularVelocity;
         }
     }
