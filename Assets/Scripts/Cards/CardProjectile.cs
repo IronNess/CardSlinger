@@ -32,7 +32,7 @@ public class CardProjectile : MonoBehaviour
 
     [Header("Teleport Effect")]
     public Transform playerRigRoot;         // The XR rig or player root to teleport
-    public float teleportYOffset = 0.2f;    // Small height offset so player doesn't teleport into floor
+    public float teleportYOffset = 1.1176f; //Offset of player heigh so player doesn't teleport into floor or on top of enemy
 
     [Header("Lifetime")]
     public float lifetimeAfterLanding = 10f; // Time before card despawns after landing
@@ -119,12 +119,12 @@ public class CardProjectile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // If the card was not properly thrown, just start the ground timer
-        if (!hasBeenThrown)
+        /*if (!hasBeenThrown)
         {
             StartGroundTimer();
             return;
-        }
-
+        }*/
+        
         // Check if the object hit is an enemy
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -213,7 +213,8 @@ public class CardProjectile : MonoBehaviour
 
         // Move player to the enemy hit position with a small Y offset
         Vector3 targetPosition = hitPoint;
-        targetPosition.y += teleportYOffset;
+        //targetPosition.y += teleportYOffset;
+        targetPosition.y = teleportYOffset;
         playerRigRoot.position = targetPosition;
     }
 

@@ -410,7 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3264cc1c49f3d2e4eaaf246279ff24cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardProjectile
-  damage: 50
+  damage: 15
   minimumThrowSpeed: 1.5
   effectType: 3
   burnDamagePerTick: 2
