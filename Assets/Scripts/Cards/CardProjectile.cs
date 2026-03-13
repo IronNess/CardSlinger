@@ -53,6 +53,19 @@ public class CardProjectile : MonoBehaviour
         // Get references when the object is created
         rb = GetComponent<Rigidbody>();
         grabInteractable = GetComponent<XRGrabInteractable>();
+
+        if(effectType == CardEffectType.Teleport)
+        {
+            GameObject player = GameObject.Find("VR Player");
+            if (player != null)
+            {
+                playerRigRoot = player.transform;
+            }
+            else
+            {
+                Debug.LogError("Player not found in scene");
+            }
+        }
     }
 
     private void OnEnable()
@@ -164,10 +177,30 @@ public class CardProjectile : MonoBehaviour
                 Destroy(gameObject);
                 return;
             }
-        }
+        } 
+        else if (collision.gameObject.CompareTag("Environment"))
+        {
+            
+            // Apply special effect depending on card type
+            switch (effectType)
+            {
+                case CardEffectType.Teleport:
+                    TeleportPlayerToHitPoint(collision.contacts[0].point);
+                    break;
 
-        // If it hit anything else, begin landing/despawn logic
-        StartGroundTimer();
+                case CardEffectType.Bouncy:
+                    currentBounceCount++;
+
+                    // If max bounces reached, stop bouncing and start despawn behaviour
+                    if (currentBounceCount >= maxBounces)
+                    {
+                        LandOrDestroy();
+                    }
+                    return;
+            }
+            // If it hit anything else, begin landing/despawn logic
+            StartGroundTimer();
+        }       
     }
 
     private void StartGroundTimer()
