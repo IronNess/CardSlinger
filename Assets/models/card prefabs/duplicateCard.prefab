@@ -412,14 +412,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardProjectile
   damage: 50
   minimumThrowSpeed: 1.5
-  effectType: 5
+  effectType: 4
   burnDamagePerTick: 2
   burnTickInterval: 0.5
   burnTicks: 3
   maxBounces: 3
   cardPrefabOverride: {fileID: 1321502302070146014}
   duplicateCount: 1
-  scatterCount: 3
+  scatterCount: 2
   scatterAngle: 15
   childVelocityMultiplier: 0.9
   playerRigRoot: {fileID: 0}
