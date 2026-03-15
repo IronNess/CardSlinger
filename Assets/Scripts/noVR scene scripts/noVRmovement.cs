@@ -47,31 +47,24 @@ public class noVRmovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("1");
-
             // Ask DeckManager for the next card prefab
             GameObject cardPrefab = deckManager.DrawCard();
 
             if (cardPrefab == null)
                 return;
 
-            Debug.Log("2");
-
-            Vector3 position = transform.position + new Vector3(0, 1, 0);
+            //spawn at appropriate height and slightly in front of player
+            Vector3 position = transform.position + new Vector3(0.5f, 2, 0);
 
             // Spawn the card into the world
-            GameObject spawnedCard = Instantiate(cardPrefab, position, cameraTransform.rotation);
+            GameObject spawnedCard = Instantiate(cardPrefab, position, transform.rotation);
 
             Rigidbody rb = spawnedCard.GetComponent<Rigidbody>();
 
             if (rb == null)
                 return;
 
-            Debug.Log("3");
-
             rb.AddForce(spawnedCard.transform.forward * Force, ForceMode.Force);
-
-            Debug.Log("4");
         }
     }
 }

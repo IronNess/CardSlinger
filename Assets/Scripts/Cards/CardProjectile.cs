@@ -60,10 +60,12 @@ public class CardProjectile : MonoBehaviour
             if (player != null)
             {
                 playerRigRoot = player.transform;
+                Debug.Log("Player assigned");
             }
             else
             {
                 Debug.LogError("Player not found in scene");
+                Debug.Log("Player not found in scene");
             }
         }
     }
@@ -180,7 +182,8 @@ public class CardProjectile : MonoBehaviour
         } 
         else if (collision.gameObject.CompareTag("Environment"))
         {
-            
+            Debug.Log("Collision");
+            Debug.Log(effectType);
             // Apply special effect depending on card type
             switch (effectType)
             {
@@ -200,7 +203,9 @@ public class CardProjectile : MonoBehaviour
             }
             // If it hit anything else, begin landing/despawn logic
             StartGroundTimer();
-        }       
+        }
+
+        Debug.Log(collision.gameObject.tag);
     }
 
     private void StartGroundTimer()
