@@ -14,7 +14,7 @@ public class DeckManager : MonoBehaviour
 
     private void Start()
     {
-        textCount.text = drawPile.Count.ToString() + "/" + maxDeckSize.ToString();
+        UpdateDeckText();
     }
 
     public GameObject DrawCard()
@@ -37,8 +37,7 @@ public class DeckManager : MonoBehaviour
         GameObject cardPrefab = drawPile[0];
         drawPile.RemoveAt(0);
 
-        textCount.text = drawPile.Count.ToString() + "/" + maxDeckSize.ToString();
-
+        UpdateDeckText();
         return cardPrefab;
     }
 
@@ -46,6 +45,7 @@ public class DeckManager : MonoBehaviour
     {
         // Adds a new card to the draw pile
         drawPile.Add(cardPrefab);
+        UpdateDeckText();
         Debug.Log($"Added card to deck: {cardPrefab.name}");
     }
 
@@ -55,6 +55,7 @@ public class DeckManager : MonoBehaviour
         if (drawPile.Contains(cardPrefab))
         {
             drawPile.Remove(cardPrefab);
+            UpdateDeckText();
             Debug.Log($"Removed card from draw pile: {cardPrefab.name}");
             return;
         }
@@ -63,6 +64,7 @@ public class DeckManager : MonoBehaviour
         if (discardPile.Contains(cardPrefab))
         {
             discardPile.Remove(cardPrefab);
+            UpdateDeckText();
             Debug.Log($"Removed card from discard pile: {cardPrefab.name}");
         }
     }
@@ -71,6 +73,7 @@ public class DeckManager : MonoBehaviour
     {
         // Places used card into the discard pile
         discardPile.Add(cardPrefab);
+        UpdateDeckText();
     }
 
     public int RemainingCards()
@@ -94,6 +97,16 @@ public class DeckManager : MonoBehaviour
             drawPile[randomIndex] = temp;
         }
 
+        UpdateDeckText();
         Debug.Log("Discard pile reshuffled into draw pile.");
+    }
+
+    private void UpdateDeckText()
+    {
+        // Only update text if a TMP object has been assigned
+        if (textCount != null)
+        {
+            textCount.text = drawPile.Count.ToString() + "/" + maxDeckSize.ToString();
+        }
     }
 }

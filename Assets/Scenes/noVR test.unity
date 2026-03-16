@@ -332,6 +332,7 @@ GameObject:
   - component: {fileID: 78825277}
   - component: {fileID: 78825276}
   - component: {fileID: 78825275}
+  - component: {fileID: 78825279}
   m_Layer: 0
   m_Name: Table
   m_TagString: Environment
@@ -432,6 +433,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &78825279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78825274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f56d4d9be30eb5468f0729f7d8e13eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DrawCards
+  deckManager: {fileID: 1418601941}
+  handInteractor: {fileID: 736019791}
+  deckTag: Deck
+  gripValue:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Grip Value
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 79085683-309b-4fac-a8c6-c532725a1a6a
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
 --- !u!1 &116054604
 GameObject:
   m_ObjectHideFlags: 0
@@ -2722,9 +2750,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1418601940}
   - component: {fileID: 1418601939}
+  - component: {fileID: 1418601942}
+  - component: {fileID: 1418601941}
+  - component: {fileID: 1418601943}
   m_Layer: 0
   m_Name: card spawner
-  m_TagString: Untagged
+  m_TagString: Deck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2758,6 +2789,62 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1418601941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418601938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bc365644e197cd498bbd298afd261fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeckManager
+  drawPile:
+  - {fileID: 919132149155446097, guid: d6540b099b9496741bfcb525c7df05c7, type: 3}
+  - {fileID: 919132149155446097, guid: 6816d9cd94782e74ba48d2632bb515a5, type: 3}
+  - {fileID: 919132149155446097, guid: 2a8d24df7f371534c8e6040a39f56267, type: 3}
+  - {fileID: 919132149155446097, guid: 3fbe81b6c1fa17841b459659d18b3f33, type: 3}
+  discardPile: []
+  maxDeckSize: 10
+  textCount: {fileID: 0}
+  reshuffleDiscardIntoDraw: 1
+--- !u!65 &1418601942
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418601938}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 1, z: 1}
+  m_Center: {x: 0, y: -0.5, z: 0}
+--- !u!114 &1418601943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418601938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36cd366bff4d9f64b940c71ebab81ca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnCardTest
+  cardPrefab: {fileID: 919132149155446097, guid: 6816d9cd94782e74ba48d2632bb515a5, type: 3}
+  spawnPoint: {fileID: 78825278}
 --- !u!1 &1491294800
 GameObject:
   m_ObjectHideFlags: 0
@@ -3432,6 +3519,8 @@ MonoBehaviour:
   - {fileID: 7189709518574677280, guid: d7dc116dcbed4fb44982a0cd01463b56, type: 3}
   - {fileID: 1321502302070146014, guid: 07ff0ddec523e514686b37fb012ead23, type: 3}
   discardPile: []
+  maxDeckSize: 10
+  textCount: {fileID: 0}
   reshuffleDiscardIntoDraw: 1
 --- !u!1 &1811117240
 GameObject:
@@ -3634,6 +3723,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2446450824745834920, guid: 7db1b441613e5804a8e182f9c00576a7, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1580796862}
+    - target: {fileID: 2446450824745834920, guid: 7db1b441613e5804a8e182f9c00576a7, type: 3}
+      propertyPath: cameraOffset
+      value: 
+      objectReference: {fileID: 1681080849}
     - target: {fileID: 4676434924146343517, guid: 7db1b441613e5804a8e182f9c00576a7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.564
