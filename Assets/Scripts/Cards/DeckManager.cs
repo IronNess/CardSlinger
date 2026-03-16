@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DeckManager : MonoBehaviour
@@ -6,8 +7,15 @@ public class DeckManager : MonoBehaviour
     [Header("Deck")]
     public List<GameObject> drawPile = new List<GameObject>();     // Cards currently available to draw
     public List<GameObject> discardPile = new List<GameObject>();  // Used cards go here
+    public int maxDeckSize = 10;
+    public TextMeshPro textCount;
 
     public bool reshuffleDiscardIntoDraw = true; // If true, discard pile can be reshuffled back in
+
+    private void Start()
+    {
+        textCount.text = drawPile.Count.ToString() + "/" + maxDeckSize.ToString();
+    }
 
     public GameObject DrawCard()
     {
@@ -28,6 +36,8 @@ public class DeckManager : MonoBehaviour
         // Take the first card from the draw pile
         GameObject cardPrefab = drawPile[0];
         drawPile.RemoveAt(0);
+
+        textCount.text = drawPile.Count.ToString() + "/" + maxDeckSize.ToString();
 
         return cardPrefab;
     }

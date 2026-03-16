@@ -32,7 +32,7 @@ public class CardProjectile : MonoBehaviour
 
     [Header("Teleport Effect")]
     public Transform playerRigRoot;         // The XR rig or player root to teleport
-    public float teleportYOffset = 0.2f;    // Small height offset so player doesn't teleport into floor
+    public float teleportYOffset = 1.1176f; //Offset of player heigh so player doesn't teleport into floor or on top of enemy
 
     [Header("Lifetime")]
     public float lifetimeAfterLanding = 10f; // Time before card despawns after landing
@@ -53,6 +53,19 @@ public class CardProjectile : MonoBehaviour
         // Get references when the object is created
         rb = GetComponent<Rigidbody>();
         grabInteractable = GetComponent<XRGrabInteractable>();
+
+        if(effectType == CardEffectType.Teleport)
+        {
+            GameObject player = GameObject.Find("VR Player");
+            if (player != null)
+            {
+                playerRigRoot = player.transform;
+            }
+            else
+            {
+                Debug.LogError("Player not found in scene");
+            }
+        }
     }
 
     private void OnEnable()
@@ -90,10 +103,10 @@ public class CardProjectile : MonoBehaviour
         float speed = rb.linearVelocity.magnitude;
 
         // Only count as a throw if fast enough
-        hasBeenThrown = speed >= minimumThrowSpeed;
+       // hasBeenThrown = speed >= minimumThrowSpeed;
 
-        if (!hasBeenThrown)
-            return;
+        //if (!hasBeenThrown)
+          //  return;
 
         // Duplicate/scatter effects happen at the moment the card is thrown
         switch (effectType)
@@ -119,12 +132,12 @@ public class CardProjectile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // If the card was not properly thrown, just start the ground timer
-        if (!hasBeenThrown)
+        /*if (!hasBeenThrown)
         {
             StartGroundTimer();
             return;
-        }
-
+        }*/
+        
         // Check if the object hit is an enemy
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -164,10 +177,29 @@ public class CardProjectile : MonoBehaviour
                 Destroy(gameObject);
                 return;
             }
-        }
+        } 
+        else if (collision.gameObject.CompareTag("Environment"))
+        {
+            // Apply special effect depending on card type
+            switch (effectType)
+            {
+                case CardEffectType.Teleport:
+                    TeleportPlayerToHitPoint(collision.contacts[0].point);
+                    break;
 
-        // If it hit anything else, begin landing/despawn logic
-        StartGroundTimer();
+                case CardEffectType.Bouncy:
+                    currentBounceCount++;
+
+                    // If max bounces reached, stop bouncing and start despawn behaviour
+                    if (currentBounceCount >= maxBounces)
+                    {
+                        LandOrDestroy();
+                    }
+                    return;
+            }
+            // If it hit anything else, begin landing/despawn logic
+            StartGroundTimer();
+        }
     }
 
     private void StartGroundTimer()
@@ -213,7 +245,8 @@ public class CardProjectile : MonoBehaviour
 
         // Move player to the enemy hit position with a small Y offset
         Vector3 targetPosition = hitPoint;
-        targetPosition.y += teleportYOffset;
+        //targetPosition.y += teleportYOffset;
+        targetPosition.y = teleportYOffset;
         playerRigRoot.position = targetPosition;
     }
 
@@ -222,10 +255,33 @@ public class CardProjectile : MonoBehaviour
         // Make sure at least 1 extra card is spawned
         int totalToSpawn = Mathf.Max(duplicateCount, 1);
 
+        GameObject prefabToSpawn = cardPrefabOverride != null ? cardPrefabOverride : gameObject;
+
         // Spawn duplicate cards with slight angle changes
         for (int i = 0; i < totalToSpawn; i++)
         {
-            SpawnChildCard(i == 0 ? -8f : 8f);
+            //SpawnChildCard(i == 0 ? -8f : 8f);
+            // Instantiate child in world space so it keeps correct physics
+            GameObject child = Instantiate(
+                prefabToSpawn,
+                transform.position,
+                transform.rotation
+            );
+
+            // Copy momentum if both have Rigidbodies
+            Rigidbody parentRb = GetComponent<Rigidbody>();
+            Rigidbody childRb = child.GetComponent<Rigidbody>();
+
+            if (parentRb != null && childRb != null)
+            {
+                // Match parent's linear and angular velocity
+                childRb.linearVelocity = parentRb.linearVelocity;
+                childRb.angularVelocity = parentRb.angularVelocity;
+            }
+            else
+            {
+                Debug.LogWarning("Either parent or child is missing a Rigidbody. Momentum won't be applied.");
+            }
         }
     }
 
@@ -237,10 +293,33 @@ public class CardProjectile : MonoBehaviour
         // Calculate start angle so cards spread evenly
         float startAngle = -scatterAngle * (totalToSpawn - 1) * 0.5f;
 
+        GameObject prefabToSpawn = cardPrefabOverride != null ? cardPrefabOverride : gameObject;
+
         for (int i = 0; i < totalToSpawn; i++)
         {
             float angle = startAngle + (scatterAngle * i);
-            SpawnChildCard(angle);
+            GameObject child = Instantiate(
+                prefabToSpawn,
+                transform.position,
+                transform.rotation
+            );
+
+            // Copy momentum if both have Rigidbodies
+            Rigidbody parentRb = GetComponent<Rigidbody>();
+            Rigidbody childRb = child.GetComponent<Rigidbody>();
+
+            if (parentRb != null && childRb != null)
+            {
+                // Match parent's linear and angular velocity
+                Vector3 rotatedVelocity = Quaternion.Euler(0f, angle, 0f) * parentRb.linearVelocity;
+                childRb.linearVelocity = rotatedVelocity;
+                childRb.angularVelocity = parentRb.angularVelocity;
+            }
+            else
+            {
+                Debug.LogWarning("Either parent or child is missing a Rigidbody. Momentum won't be applied.");
+            }
+            //SpawnChildCard(angle);
         }
 
         // Destroy original scatter card after splitting
@@ -279,8 +358,9 @@ public class CardProjectile : MonoBehaviour
         if (childRb != null)
         {
             // Crd velocity
-            Vector3 rotatedVelocity = Quaternion.Euler(0f, yAngleOffset, 0f) * rb.linearVelocity;
-            childRb.linearVelocity = rotatedVelocity * childVelocityMultiplier;
+            //Vector3 rotatedVelocity = Quaternion.Euler(0f, yAngleOffset, 0f) * rb.linearVelocity;
+            Vector3 rotatedVelocity = rb.linearVelocity;
+            childRb.linearVelocity = rotatedVelocity;// * childVelocityMultiplier;
             childRb.angularVelocity = rb.angularVelocity;
         }
     }

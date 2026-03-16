@@ -7,6 +7,7 @@ TagManager:
   - Card
   - Enemy
   - Deck
+  - Environment
   layers:
   - Default
   - TransparentFX
