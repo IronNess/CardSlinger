@@ -6,8 +6,13 @@ public class spawnEnemies : MonoBehaviour
     public Transform target;
     public Transform cameraOffset;
 
+<<<<<<< HEAD
     [Header("Enemy Setup")]
     public EnemyType[] enemyTypes;
+=======
+   // public GameObject enemyPrefab;
+   public EnemyType[] enemyTypes;
+>>>>>>> f8a0d8ebee43e9956c9614425eaca9de60ef4074
     public Transform[] spawnPoints;
 
     [Header("Spawn Settings")]
@@ -27,6 +32,7 @@ public class spawnEnemies : MonoBehaviour
         if (Time.time > nextSpawnTime)
         {
             SpawnEnemy();
+<<<<<<< HEAD
 
             float currentDelay = spawnDelay - spawnCount * spawnReduction;
 
@@ -35,12 +41,16 @@ public class spawnEnemies : MonoBehaviour
                 currentDelay = 0.5f;
 
             nextSpawnTime = Time.time + currentDelay;
+=======
+            nextSpawnTime = Time.time + spawnDelay - spawnCount * spawnReduction;
+>>>>>>> f8a0d8ebee43e9956c9614425eaca9de60ef4074
             spawnCount++;
         }
     }
 
     void SpawnEnemy()
     {
+<<<<<<< HEAD
         if (enemyTypes == null || enemyTypes.Length == 0)
         {
             Debug.LogWarning("No enemy types assigned on " + gameObject.name);
@@ -60,12 +70,21 @@ public class spawnEnemies : MonoBehaviour
         int spawnIndex = Random.Range(0, spawnPoints.Length);
 
         // Spawn enemy
+=======
+        //enemy type is picked
+        EnemyType type = enemyTypes[Random.Range(0, enemyTypes.Length)];
+
+        //spawn point get selected
+        int spawnIndex = Random.Range(0, spawnPoints.Length);
+        //enemy spawn
+>>>>>>> f8a0d8ebee43e9956c9614425eaca9de60ef4074
         GameObject obj = Instantiate(
             type.prefab,
             spawnPoints[spawnIndex].position,
             spawnPoints[spawnIndex].rotation
         );
 
+<<<<<<< HEAD
         // Melee setup
         moveToPlayer mover = obj.GetComponent<moveToPlayer>();
         if (mover != null)
@@ -84,3 +103,18 @@ public class spawnEnemies : MonoBehaviour
         }
     }
 }
+=======
+        
+       //melee 
+        moveToPlayer mover = obj.GetComponent<moveToPlayer>();
+		if(mover != null) 
+		{		
+			mover.setTransforms(target, cameraOffset);
+			mover.ApplyStats(type);
+    	}
+		//range 
+		shootAtPlayer shooter = obj.GetComponent<shootAtPlayer>();
+		if ( shooter != null) {}
+}
+}
+>>>>>>> f8a0d8ebee43e9956c9614425eaca9de60ef4074
