@@ -5,13 +5,15 @@ public class moveToPlayer : MonoBehaviour
 
     public Transform target;
     public Transform cameraOffset;
-    private Vector3 targetPos = new Vector3(0, 0, 0);
+    //private Vector3 targetPos = new Vector3(0, 0, 0);
 
     public float speed = 1f;
     public float withinRange = 10f;
 
     public string targetTag = "Player";
     public string damageTag = "Card";
+    
+    private Vector3 targetPos;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -68,5 +70,10 @@ public class moveToPlayer : MonoBehaviour
         target = player;
         cameraOffset = cam;
         targetPos = target.position + cameraOffset.position;
+    }
+
+    public void ApplyStats(EnemyType type)
+    {
+        speed = type.speed;
     }
 }
