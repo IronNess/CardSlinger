@@ -1,112 +1,99 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Scene-facing deck manager.
+/// This updates UI and forwards deck actions to PersistentDeckState.
+/// </summary>
 public class DeckManager : MonoBehaviour
 {
-    [Header("Deck")]
-    public List<GameObject> drawPile = new List<GameObject>();     // Cards currently available to draw
-    public List<GameObject> discardPile = new List<GameObject>();  // Used cards go here
-    public int maxDeckSize = 10;
+    [Header("UI")]
     public TextMeshPro textCount;
 
-    public bool reshuffleDiscardIntoDraw = true; // If true, discard pile can be reshuffled back in
+    private PersistentDeckState persistentDeck;
 
     private void Start()
     {
+        persistentDeck = PersistentDeckState.Instance;
+
+        if (persistentDeck == null)
+        {
+            Debug.LogError("No PersistentDeckState found in scene.");
+            return;
+        }
+
         UpdateDeckText();
     }
 
     public GameObject DrawCard()
     {
-        // If there are no cards in the draw pile, reshuffle
-        if (drawPile.Count == 0)
-        {
-            if (reshuffleDiscardIntoDraw && discardPile.Count > 0)
-            {
-                Reshuffle();
-            }
-            else
-            {
-                Debug.LogWarning("No cards left to draw.");
-                return null;
-            }
-        }
+        if (persistentDeck == null)
+            return null;
 
-        // Take the first card from the draw pile
-        GameObject cardPrefab = drawPile[0];
-        drawPile.RemoveAt(0);
-
+        GameObject cardPrefab = persistentDeck.DrawCard();
         UpdateDeckText();
         return cardPrefab;
     }
 
     public void AddCard(GameObject cardPrefab)
     {
-        // Adds a new card to the draw pile
-        drawPile.Add(cardPrefab);
+        if (persistentDeck == null)
+            return;
+
+        persistentDeck.AddCard(cardPrefab);
         UpdateDeckText();
-        Debug.Log($"Added card to deck: {cardPrefab.name}");
     }
 
     public void RemoveCard(GameObject cardPrefab)
     {
-        // Remove card from draw pile if present
-        if (drawPile.Contains(cardPrefab))
-        {
-            drawPile.Remove(cardPrefab);
-            UpdateDeckText();
-            Debug.Log($"Removed card from draw pile: {cardPrefab.name}");
+        if (persistentDeck == null)
             return;
-        }
 
-        // Remove card from discard pile if present
-        if (discardPile.Contains(cardPrefab))
-        {
-            discardPile.Remove(cardPrefab);
-            UpdateDeckText();
-            Debug.Log($"Removed card from discard pile: {cardPrefab.name}");
-        }
+        persistentDeck.RemoveCard(cardPrefab);
+        UpdateDeckText();
     }
 
     public void DiscardCard(GameObject cardPrefab)
     {
-        // Places used card into the discard pile
-        discardPile.Add(cardPrefab);
+        if (persistentDeck == null)
+            return;
+
+        persistentDeck.DiscardCard(cardPrefab);
+        UpdateDeckText();
+    }
+
+    public void PrepareDeckForNextLevel()
+    {
+        if (persistentDeck == null)
+            return;
+
+        persistentDeck.PrepareDeckForNextLevel();
+        UpdateDeckText();
+    }
+
+    public void ResetDeckToStartingDeck()
+    {
+        if (persistentDeck == null)
+            return;
+
+        persistentDeck.ResetDeckToStartingDeck();
         UpdateDeckText();
     }
 
     public int RemainingCards()
     {
-        // Returns how many cards are left to draw
-        return drawPile.Count;
-    }
+        if (persistentDeck == null)
+            return 0;
 
-    public void Reshuffle()
-    {
-        // Put discarded cards back into the draw pile
-        drawPile.AddRange(discardPile);
-        discardPile.Clear();
-
-        // Shuffle draw pile randomly
-        for (int i = 0; i < drawPile.Count; i++)
-        {
-            GameObject temp = drawPile[i];
-            int randomIndex = Random.Range(i, drawPile.Count);
-            drawPile[i] = drawPile[randomIndex];
-            drawPile[randomIndex] = temp;
-        }
-
-        UpdateDeckText();
-        Debug.Log("Discard pile reshuffled into draw pile.");
+        return persistentDeck.RemainingCards();
     }
 
     private void UpdateDeckText()
     {
-        // Only update text if a TMP object has been assigned
-        if (textCount != null)
+        if (textCount != null && persistentDeck != null)
         {
-            textCount.text = drawPile.Count.ToString() + "/" + maxDeckSize.ToString();
+            textCount.text = persistentDeck.drawPile.Count + "/" +
+                             (persistentDeck.drawPile.Count + persistentDeck.discardPile.Count);
         }
     }
 }
