@@ -19,7 +19,7 @@ public class spawnEnemies : MonoBehaviour
         if (Time.time > nextSpawnTime)
         {
             SpawnEnemy();
-            nextSpawnTime = Time.time + spawnDelay - spawnCount*spawnReduction;
+            nextSpawnTime = Time.time + spawnDelay - spawnCount * spawnReduction;
             spawnCount++;
         }
     }
@@ -39,10 +39,15 @@ public class spawnEnemies : MonoBehaviour
         );
 
         
-        //pass transforms and stats
+       //melee 
         moveToPlayer mover = obj.GetComponent<moveToPlayer>();
-        mover.setTransforms(target, cameraOffset);
-        mover.ApplyStats(type);
-
-    }
+		if(mover != null) 
+		{		
+			mover.setTransforms(target, cameraOffset);
+			mover.ApplyStats(type);
+    	}
+		//range 
+		shootAtPlayer shooter = obj.GetComponent<shootAtPlayer>();
+		if ( shooter != null) {}
+}
 }

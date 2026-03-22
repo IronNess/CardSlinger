@@ -5,7 +5,7 @@ public class shootAtPlayer : MonoBehaviour
     public Transform target;
     public GameObject projectilePrefab;
     public float shootInterval = 2f;
-    public float projectileSpeed = 10f;
+    public float projectileSpeed = 0.5f;
     public string targetTag = "Player";
 
 
@@ -13,6 +13,8 @@ public class shootAtPlayer : MonoBehaviour
 
     void Start()
     {
+    transform.position += transform.forward * 0.2f;
+
         GameObject playerObj = GameObject.FindGameObjectWithTag(targetTag);
         if (playerObj != null)
         {
@@ -41,7 +43,7 @@ public class shootAtPlayer : MonoBehaviour
     {
         GameObject proj = Instantiate(
             projectilePrefab,
-            transform.position + transform.forward * 0.5f,
+            transform.position + transform.forward * 0.5f + Vector3.up * 0.5f,
             transform.rotation
         );
 
