@@ -185,6 +185,7 @@ public class CardProjectile : MonoBehaviour
             {
                 case CardEffectType.Teleport:
                     TeleportPlayerToHitPoint(collision.contacts[0].point);
+                    Destroy(gameObject);
                     break;
 
                 case CardEffectType.Bouncy:
