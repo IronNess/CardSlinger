@@ -6,86 +6,69 @@ public class spawnEnemies : MonoBehaviour
     public Transform target;
     public Transform cameraOffset;
 
-<<<<<<< HEAD
     [Header("Enemy Setup")]
-    public EnemyType[] enemyTypes;
-=======
-   // public GameObject enemyPrefab;
-   public EnemyType[] enemyTypes;
->>>>>>> f8a0d8ebee43e9956c9614425eaca9de60ef4074
-    public Transform[] spawnPoints;
+    public EnemyType[] enemyTypes;     // Different enemy types this level can spawn
+    public Transform[] spawnPoints;    // Spawn positions for this level
 
     [Header("Spawn Settings")]
-    public float spawnDelay = 3f;
+    public float spawnDelay = 3f;      
     public float spawnReduction = 0.01f;
-    public int totalEnemiesToSpawn = 3;
+    public int totalEnemiesToSpawn = 3; // Total number of enemies this level should spawn
 
     private float nextSpawnTime;
     private int spawnCount = 0;
 
     void Update()
     {
-        // Stop spawning after this level has spawned enough enemies
+        // Stop spawning once the level has spawned enough enemies
         if (spawnCount >= totalEnemiesToSpawn)
             return;
 
         if (Time.time > nextSpawnTime)
         {
             SpawnEnemy();
-<<<<<<< HEAD
 
             float currentDelay = spawnDelay - spawnCount * spawnReduction;
 
-            // Prevent invalid delay values
+            // Prevent the delay from becoming too low or negative
             if (currentDelay < 0.5f)
                 currentDelay = 0.5f;
 
             nextSpawnTime = Time.time + currentDelay;
-=======
-            nextSpawnTime = Time.time + spawnDelay - spawnCount * spawnReduction;
->>>>>>> f8a0d8ebee43e9956c9614425eaca9de60ef4074
             spawnCount++;
         }
     }
 
     void SpawnEnemy()
     {
-<<<<<<< HEAD
+        // Safety check: enemy types must be assigned
         if (enemyTypes == null || enemyTypes.Length == 0)
         {
             Debug.LogWarning("No enemy types assigned on " + gameObject.name);
             return;
         }
 
+        // Safety check: spawn points must be assigned
         if (spawnPoints == null || spawnPoints.Length == 0)
         {
             Debug.LogWarning("No spawn points assigned on " + gameObject.name);
             return;
         }
 
-        // Pick a random enemy type
+        // Pick a random enemy type from the list
         EnemyType type = enemyTypes[Random.Range(0, enemyTypes.Length)];
 
         // Pick a random spawn point
         int spawnIndex = Random.Range(0, spawnPoints.Length);
 
-        // Spawn enemy
-=======
-        //enemy type is picked
-        EnemyType type = enemyTypes[Random.Range(0, enemyTypes.Length)];
-
-        //spawn point get selected
-        int spawnIndex = Random.Range(0, spawnPoints.Length);
-        //enemy spawn
->>>>>>> f8a0d8ebee43e9956c9614425eaca9de60ef4074
+        // Spawn the enemy
         GameObject obj = Instantiate(
             type.prefab,
             spawnPoints[spawnIndex].position,
             spawnPoints[spawnIndex].rotation
         );
 
-<<<<<<< HEAD
-        // Melee setup
+        // Set up melee / movement enemy
         moveToPlayer mover = obj.GetComponent<moveToPlayer>();
         if (mover != null)
         {
@@ -93,28 +76,11 @@ public class spawnEnemies : MonoBehaviour
             mover.ApplyStats(type);
         }
 
-        // Ranged setup
+        // Set up ranged enemy if it has a shoot script
         shootAtPlayer shooter = obj.GetComponent<shootAtPlayer>();
         if (shooter != null)
         {
-            // Only use these if they exist in your shootAtPlayer script
-            // shooter.SetTarget(target, cameraOffset);
-            // shooter.ApplyStats(type);
+            // Add ranged setup here later if needed
         }
     }
 }
-=======
-        
-       //melee 
-        moveToPlayer mover = obj.GetComponent<moveToPlayer>();
-		if(mover != null) 
-		{		
-			mover.setTransforms(target, cameraOffset);
-			mover.ApplyStats(type);
-    	}
-		//range 
-		shootAtPlayer shooter = obj.GetComponent<shootAtPlayer>();
-		if ( shooter != null) {}
-}
-}
->>>>>>> f8a0d8ebee43e9956c9614425eaca9de60ef4074

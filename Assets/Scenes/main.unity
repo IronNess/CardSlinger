@@ -1418,6 +1418,7 @@ MonoBehaviour:
   - {fileID: 203097917}
   spawnDelay: 5
   spawnReduction: 0.005
+  totalEnemiesToSpawn: 3
 --- !u!4 &522846275
 Transform:
   m_ObjectHideFlags: 0
@@ -3562,21 +3563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bc365644e197cd498bbd298afd261fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeckManager
-  drawPile:
-  - {fileID: 7189709518574677280, guid: d7dc116dcbed4fb44982a0cd01463b56, type: 3}
-  - {fileID: 1321502302070146014, guid: 07ff0ddec523e514686b37fb012ead23, type: 3}
-  - {fileID: 7945002998670302072, guid: dcc06f978e333de4088901da20d8c688, type: 3}
-  - {fileID: 1621712922959446906, guid: c549bc1e442845a4eba180cefa5eba76, type: 3}
-  - {fileID: 7189709518574677280, guid: d7dc116dcbed4fb44982a0cd01463b56, type: 3}
-  - {fileID: 1321502302070146014, guid: 07ff0ddec523e514686b37fb012ead23, type: 3}
-  - {fileID: 7945002998670302072, guid: dcc06f978e333de4088901da20d8c688, type: 3}
-  - {fileID: 1621712922959446906, guid: c549bc1e442845a4eba180cefa5eba76, type: 3}
-  - {fileID: 7189709518574677280, guid: d7dc116dcbed4fb44982a0cd01463b56, type: 3}
-  - {fileID: 1321502302070146014, guid: 07ff0ddec523e514686b37fb012ead23, type: 3}
-  discardPile: []
-  maxDeckSize: 10
   textCount: {fileID: 1053055808}
-  reshuffleDiscardIntoDraw: 1
 --- !u!1 &1811117240
 GameObject:
   m_ObjectHideFlags: 0
