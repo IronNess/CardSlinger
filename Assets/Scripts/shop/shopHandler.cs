@@ -17,10 +17,18 @@ public GameObject duplicateCardPrefab;  // Reference to deck manager
     //[Header("Shop Inventory")]
     //public List<ShopCardItem> cardItems = new List<ShopCardItem>();         // Cards for sale
 
+    private void Awake()
+    {
+        Time.timeScale = 1f;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        balance.text = "Balance: " + playerMoney.ToString();
+           if (balance != null)
+            balance.text = "Balance: " + playerMoney;
     }
 
     // Update is called once per frame
