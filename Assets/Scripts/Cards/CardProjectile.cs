@@ -159,7 +159,7 @@ public class CardProjectile : MonoBehaviour
                         TeleportPlayerToHitPoint(collision.contacts[0].point);
                         break;
 
-                    case CardEffectType.Bouncy:
+                    case CardEffectType.Bounce:
                         currentBounceCount++;
 
                         // If max bounces reached, stop bouncing and start despawn behaviour
@@ -172,7 +172,7 @@ public class CardProjectile : MonoBehaviour
             }
 
             // Destroy card after hitting enemy unless it is a bounce card
-            if (destroyOnEnemyHit && effectType != CardEffectType.Bouncy)
+            if (destroyOnEnemyHit && effectType != CardEffectType.Bounce)
             {
                 Destroy(gameObject);
                 return;
@@ -187,7 +187,7 @@ public class CardProjectile : MonoBehaviour
                     TeleportPlayerToHitPoint(collision.contacts[0].point);
                     break;
 
-                case CardEffectType.Bouncy:
+                case CardEffectType.Bounce:
                     currentBounceCount++;
 
                     // If max bounces reached, stop bouncing and start despawn behaviour
