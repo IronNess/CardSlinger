@@ -284,7 +284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardProjectile
   damage: 50
   minimumThrowSpeed: 1.5
-  effectType: 2
+  effectType: 0
   burnDamagePerTick: 2
   burnTickInterval: 0.5
   burnTicks: 3
