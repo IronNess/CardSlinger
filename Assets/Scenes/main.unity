@@ -556,6 +556,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5908842183616054956, guid: 05b115ec18eaf4e60885d01632a99c26, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5908842183616054956, guid: 05b115ec18eaf4e60885d01632a99c26, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6236587001077964521, guid: 05b115ec18eaf4e60885d01632a99c26, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -563,10 +571,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5283307266449261389, guid: 05b115ec18eaf4e60885d01632a99c26, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1484423864}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05b115ec18eaf4e60885d01632a99c26, type: 3}
 --- !u!1 &116054604
 GameObject:
@@ -1802,6 +1807,11 @@ MonoBehaviour:
     m_InputActionReference: {fileID: -6493913391331992944, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     m_ObjectReferenceObject: {fileID: 0}
     m_ManualValue: {x: 0, y: 0}
+--- !u!1 &619192233 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4411783943332289714, guid: 7db1b441613e5804a8e182f9c00576a7, type: 3}
+  m_PrefabInstance: {fileID: 1838246998}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &620640439
 GameObject:
   m_ObjectHideFlags: 0
@@ -1895,13 +1905,18 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7943158368528479042, guid: 1c721f035adca491aa4188cbbcbc6550, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7943158368528479042, guid: 1c721f035adca491aa4188cbbcbc6550, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5283307266449261389, guid: 1c721f035adca491aa4188cbbcbc6550, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1080944991}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c721f035adca491aa4188cbbcbc6550, type: 3}
 --- !u!1 &645360944
 GameObject:
@@ -2584,28 +2599,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &1080944985 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5283307266449261389, guid: 1c721f035adca491aa4188cbbcbc6550, type: 3}
-  m_PrefabInstance: {fileID: 626122858}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1080944991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1080944985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8a415576767d5345832b4a3bcb8506c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 30
-  currentHealth: 30
-  destroyOnDeath: 1
-  healthBar: {fileID: 0}
-  healthSlider: {fileID: 0}
 --- !u!1 &1271297975
 GameObject:
   m_ObjectHideFlags: 0
@@ -3040,50 +3033,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1445087734 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5283307266449261389, guid: 9e6ada7b691e84191aac06104653f26f, type: 3}
-  m_PrefabInstance: {fileID: 1537912727}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1445087740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1445087734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8a415576767d5345832b4a3bcb8506c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 30
-  currentHealth: 30
-  destroyOnDeath: 1
-  healthBar: {fileID: 0}
-  healthSlider: {fileID: 0}
---- !u!1 &1484423858 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5283307266449261389, guid: 05b115ec18eaf4e60885d01632a99c26, type: 3}
-  m_PrefabInstance: {fileID: 87271323}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1484423864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1484423858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8a415576767d5345832b4a3bcb8506c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 30
-  currentHealth: 30
-  destroyOnDeath: 1
-  healthBar: {fileID: 0}
-  healthSlider: {fileID: 0}
 --- !u!1 &1491294800
 GameObject:
   m_ObjectHideFlags: 0
@@ -3346,6 +3295,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1580533073339538330, guid: 9e6ada7b691e84191aac06104653f26f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1580533073339538330, guid: 9e6ada7b691e84191aac06104653f26f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4676434924146343517, guid: 9e6ada7b691e84191aac06104653f26f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.0485206
@@ -3397,10 +3354,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5283307266449261389, guid: 9e6ada7b691e84191aac06104653f26f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1445087740}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e6ada7b691e84191aac06104653f26f, type: 3}
 --- !u!1 &1580796859
 GameObject:
@@ -4047,7 +4001,7 @@ PrefabInstance:
     - target: {fileID: -4569595524965835111, guid: 7db1b441613e5804a8e182f9c00576a7, type: 3}
       propertyPath: healthBar
       value: 
-      objectReference: {fileID: 29730176}
+      objectReference: {fileID: 619192233}
     - target: {fileID: -4569595524965835111, guid: 7db1b441613e5804a8e182f9c00576a7, type: 3}
       propertyPath: healthImage
       value: 
@@ -4075,6 +4029,14 @@ PrefabInstance:
     - target: {fileID: 2539663759675182703, guid: 7db1b441613e5804a8e182f9c00576a7, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963561321143181404, guid: 7db1b441613e5804a8e182f9c00576a7, type: 3}
+      propertyPath: m_Value
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2963561321143181404, guid: 7db1b441613e5804a8e182f9c00576a7, type: 3}
+      propertyPath: m_Direction
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3457707592842004716, guid: 7db1b441613e5804a8e182f9c00576a7, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4127,6 +4089,10 @@ PrefabInstance:
     - target: {fileID: 5283307266449261389, guid: 7db1b441613e5804a8e182f9c00576a7, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5626556138887817743, guid: 7db1b441613e5804a8e182f9c00576a7, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
