@@ -5,6 +5,8 @@ public class LevelManager : MonoBehaviour
 {
     private bool levelComplete = false;
 
+    public GameObject levelSelect;
+
     void Update()
     {
         if (levelComplete)
@@ -28,6 +30,16 @@ public class LevelManager : MonoBehaviour
             GameProgress.Instance.AdvanceLevel();
         }
 
-        SceneManager.LoadScene("shop");
+        //SceneManager.LoadScene("shop");
+        GameObject playerInteractor = GameObject.Find("VR Player/Camera Offset/Right Hand/Ray Interactor");
+        if (playerInteractor != null)
+        {
+            playerInteractor.SetActive(true);
+            levelSelect.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Cant find interactor");
+        }
     }
 }

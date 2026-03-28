@@ -25,18 +25,7 @@ public class shopClicked : MonoBehaviour
 
     private void clicked()
     {
-        Debug.Log("Continue button clicked");
-
-        if (GameProgress.Instance == null)
-        {
-            Debug.LogError("GameProgress.Instance is NULL");
-            return;
-        }
-
-        string nextLevel = GameProgress.Instance.GetNextLevelSceneName();
-        Debug.Log("Trying to load scene: " + nextLevel);
-
-        SceneManager.LoadScene(nextLevel);
+        SceneManager.LoadScene("Scenes/shop");
     }
 
     private void OnDestroy()

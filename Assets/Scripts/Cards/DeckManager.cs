@@ -93,7 +93,7 @@ public class DeckManager : MonoBehaviour
         if (textCount != null && persistentDeck != null)
         {
             textCount.text = persistentDeck.drawPile.Count + "/" +
-                             (persistentDeck.drawPile.Count + persistentDeck.discardPile.Count);
+                             persistentDeck.startingDeck.Count;
         }
     }
 }
