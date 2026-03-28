@@ -145,6 +145,7 @@ public class CardProjectile : MonoBehaviour
 
             if (enemyHealth != null)
             {
+                Debug.Log("Damage");
                 // Deal base damage
                 enemyHealth.TakeDamage(damage);
 
@@ -160,6 +161,7 @@ public class CardProjectile : MonoBehaviour
                         break;
 
                     case CardEffectType.Bounce:
+                        Debug.Log("Bounce");
                         currentBounceCount++;
 
                         // If max bounces reached, stop bouncing and start despawn behaviour
