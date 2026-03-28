@@ -35,7 +35,7 @@ public class CardProjectile : MonoBehaviour
     public float teleportYOffset = 1.1176f; //Offset of player heigh so player doesn't teleport into floor or on top of enemy
 
     [Header("Lifetime")]
-    public float lifetimeAfterLanding = 10f; // Time before card despawns after landing
+    public float lifetimeAfterLanding = 30f; // Time before card despawns after landing
     public bool destroyOnEnemyHit = true;    // Destroy when hitting an enemy
     public bool destroyAfterLifetime = true; // Destroy after landing timer finishes
 
@@ -185,6 +185,7 @@ public class CardProjectile : MonoBehaviour
             {
                 case CardEffectType.Teleport:
                     TeleportPlayerToHitPoint(collision.contacts[0].point);
+                    Destroy(gameObject);
                     break;
 
                 case CardEffectType.Bounce:

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3558591474789469993
+--- !u!1 &3973614366253888079
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1884941566924272817}
+  - component: {fileID: 8030354249002929780}
   m_Layer: 0
   m_Name: grabDir
   m_TagString: Untagged
@@ -16,17 +16,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1884941566924272817
+--- !u!4 &8030354249002929780
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3558591474789469993}
+  m_GameObject: {fileID: 3973614366253888079}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.625, y: 1, z: 1.5999999}
+  m_LocalScale: {x: 0, y: 1, z: 1.5999999}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2146717164748986816}
@@ -91,16 +91,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d6540b099b9496741bfcb525c7df05c7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 4926594564522961014, guid: e5f58ef66893a774e8b58e537102fed0, type: 3}
     - target: {fileID: 919132149155446097, guid: d6540b099b9496741bfcb525c7df05c7, type: 3}
       propertyPath: m_Name
-      value: teleportCard
+      value: defaultCard
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d6540b099b9496741bfcb525c7df05c7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1884941566924272817}
+      addedObject: {fileID: 8030354249002929780}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d6540b099b9496741bfcb525c7df05c7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2045112519508643786}
@@ -253,7 +257,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 0
   m_PredictedVisualsTransform: {fileID: 0}
   m_VelocityDamping: 1
   m_VelocityScale: 1
@@ -314,7 +318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardProjectile
   damage: 50
   minimumThrowSpeed: 1.5
-  effectType: 2
+  effectType: 0
   burnDamagePerTick: 2
   burnTickInterval: 0.5
   burnTicks: 3
@@ -430,17 +434,29 @@ PrefabInstance:
       propertyPath: ShapeModule.alignToDirection
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7149508684990454401, guid: 45e0f06c750176947862c10346226439, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149508684990454401, guid: 45e0f06c750176947862c10346226439, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149508684990454401, guid: 45e0f06c750176947862c10346226439, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8445763112410648400, guid: 45e0f06c750176947862c10346226439, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.6901961
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8445763112410648400, guid: 45e0f06c750176947862c10346226439, type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.32941177
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8445763112410648400, guid: 45e0f06c750176947862c10346226439, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
-      value: 0.5882353
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

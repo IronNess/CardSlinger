@@ -8,7 +8,6 @@ public class HealthSystem : MonoBehaviour
 
     [Header("UI")]
     public Slider healthSlider;
-    public Image fillArea;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,12 +33,6 @@ public class HealthSystem : MonoBehaviour
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         UpdateUI();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        TakeDamage(0.1f);
     }
 
     void UpdateUI()
