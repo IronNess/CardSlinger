@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -10,16 +11,36 @@ public class EnemyHealth : MonoBehaviour
     [Header("Optional")]
     public bool destroyOnDeath = true; // If true, enemy object is destroyed when it dies
 
+    [Header("HealthBar")]
+    public GameObject healthBar;
+    private Slider healthSlider;
+
     private Coroutine burnRoutine; // Stores the burn coroutine so can stop/start it safetly
+
+    private Camera mainCamera; // used to always angle healthbar towards the player
 
     private void Awake()
     {
+        healthSlider = healthBar.GetComponent<Slider>();
+
         currentHealth = maxHealth; // Set enemy's health to full when it spwans in
+        healthSlider.maxValue = maxHealth; // update health fill
+        healthSlider.value = currentHealth; // update health fill
+
+        mainCamera = Camera.main;
+    }
+
+    private void Update()
+    {
+        // Always face the camera
+        healthBar.transform.rotation = Quaternion.LookRotation(healthBar.transform.position - mainCamera.transform.position);
     }
 
     public void TakeDamage(float amount)
     {
         currentHealth -= amount; // Reduce current health by the damage amount
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        healthSlider.value = currentHealth; // update health fill
         Debug.Log($"{gameObject.name} took {amount} damage. Health left: {currentHealth}");
 
         if (currentHealth <= 0f) // If health reaches 0 or below, kill the enemy
