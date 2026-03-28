@@ -1491,6 +1491,7 @@ MonoBehaviour:
   - {fileID: 203097917}
   spawnDelay: 5
   spawnReduction: 0.005
+  totalEnemiesToSpawn: 3
 --- !u!4 &522846275
 Transform:
   m_ObjectHideFlags: 0
@@ -3796,7 +3797,6 @@ MonoBehaviour:
   discardPile: []
   maxDeckSize: 10
   textCount: {fileID: 1053055808}
-  reshuffleDiscardIntoDraw: 1
 --- !u!1 &1811117240
 GameObject:
   m_ObjectHideFlags: 0

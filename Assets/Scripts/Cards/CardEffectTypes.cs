@@ -3,7 +3,7 @@ public enum CardEffectType
     None,
     Fire,
     Teleport,
-    Bouncy,
+    Bounce,
     Duplicate,
     Scatter
 }

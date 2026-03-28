@@ -2,34 +2,43 @@ using UnityEngine;
 
 public class moveToPlayer : MonoBehaviour
 {
-
     public Transform target;
     public Transform cameraOffset;
-    //private Vector3 targetPos = new Vector3(0, 0, 0);
 
     public float speed = 1f;
     public float withinRange = 10f;
 
     public string targetTag = "Player";
-    public string damageTag = "Card";
-    
+
     private Vector3 targetPos;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // Safety check in case target was not assigned
+        if (target == null || cameraOffset == null)
+        {
+            Debug.LogWarning($"{gameObject.name} is missing target or cameraOffset.");
+            return;
+        }
+
         targetPos = target.position;
         targetPos.y = cameraOffset.position.y;
+
+        // Keep enemy on ground height
         transform.position = new Vector3(transform.position.x, 1, transform.position.z);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Prevent errors if references are missing
+        if (target == null)
+            return;
+
         targetPos = target.position;
         targetPos.y += 1;
+
         float distance = Vector3.Distance(targetPos, transform.position);
+
         if (distance <= withinRange)
         {
             Vector3 pos = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
@@ -41,28 +50,21 @@ public class moveToPlayer : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log($"{gameObject.name} collided with {other.name}");
-        // Check if the collided object has the target tag
+
+        // If enemy reaches player, end the game / stop play mode
         if (other.CompareTag(targetTag))
         {
-            Debug.Log($"{gameObject.name} collided with {other.name}");
-#if UNITY_EDITOR
-            // Stop play mode in the Unity Editor
-            UnityEditor.EditorApplication.isPlaying = false;
+            Debug.Log($"{gameObject.name} collided with player");
 
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
-        // Quit the application in a build
-        Application.Quit();
+            Application.Quit();
 #endif
-            // Example: Stop movement or trigger animation
         }
-        // Check if the collided object has the target tag
-        if (other.CompareTag(damageTag))
-        {
-            Debug.Log($"{gameObject.name} collided with {other.name}");
-            Destroy(other.gameObject);
-            Destroy(gameObject);
-            // Example: Stop movement or trigger animation
-        }
+
+        // Removed old card-destroy logic.
+        // Enemy damage should now be handled by CardProjectile and EnemyHealth 
     }
 
     public void setTransforms(Transform player, Transform cam)
@@ -73,7 +75,14 @@ public class moveToPlayer : MonoBehaviour
     }
 
     public void ApplyStats(EnemyType type)
+{
+    speed = type.speed;
+
+    EnemyHealth enemyHealth = GetComponent<EnemyHealth>();
+    if (enemyHealth != null)
     {
-        speed = type.speed;
+        enemyHealth.maxHealth = type.health;
+        enemyHealth.currentHealth = type.health;
     }
+}
 }
