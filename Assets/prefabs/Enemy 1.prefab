@@ -132,7 +132,6 @@ MonoBehaviour:
   speed: 2
   withinRange: 50
   targetTag: Player
-  damageTag: Card
 --- !u!114 &-6808090321817293645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,8 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8a415576767d5345832b4a3bcb8506c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 30
-  currentHealth: 0
+  maxHealth: 50
+  currentHealth: 50
   destroyOnDeath: 1
   healthBar: {fileID: 5419698048305741985}
 --- !u!1001 &5906872243680352384
@@ -236,6 +235,14 @@ PrefabInstance:
     - target: {fileID: 937526798558565916, guid: 89f8038cf0482a340bea0d54b96d751f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069234257396671695, guid: 89f8038cf0482a340bea0d54b96d751f, type: 3}
+      propertyPath: m_Value
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069234257396671695, guid: 89f8038cf0482a340bea0d54b96d751f, type: 3}
+      propertyPath: m_MaxValue
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4594420876641905602, guid: 89f8038cf0482a340bea0d54b96d751f, type: 3}
       propertyPath: m_AnchorMax.x

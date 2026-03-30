@@ -6,14 +6,29 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: 8d17aba34014d494aa62fb1ed66dae14
+  - enabled: 1
+    path: Assets/Scenes/shop.unity
+    guid: f3fc744d3695bfc49bffe996c632c9e7
+  - enabled: 1
+    path: Assets/Scenes/Level2.unity
+    guid: f31a3a7ae3960c043885417d655b8e38
+  - enabled: 1
+    path: Assets/Scenes/Level3.unity
+    guid: f13849cf0afc8254c9ab5ed2ddb1c10b
+  - enabled: 1
+    path: Assets/Scenes/main.unity
+    guid: 5cb1b97982bab20499dd2a58199a9f6c
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/levelSelect.unity
     guid: 3f54e7fbbd5f2cf49be19a13376d54dc
   - enabled: 1
-    path: Assets/Scenes/main.unity
-    guid: 5cb1b97982bab20499dd2a58199a9f6c
+    path: Assets/Scenes/noVR test.unity
+    guid: 6be61f0888174f348af13b3cc9db3e7f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 094d45c9e77376d4293d0c6166004947, type: 2}
