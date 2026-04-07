@@ -3,8 +3,11 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
   public string targetTag = "Player";
-	void start()
-        {
+	void Start()
+	{
+			Rigidbody rb = GetComponent<Rigidbody>();
+        	rb.useGravity = false;
+        	rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
 			Destroy(gameObject, 8f);
 		}	
 	void OnCollisionEnter(Collision collision)

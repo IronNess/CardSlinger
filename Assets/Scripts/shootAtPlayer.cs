@@ -1,19 +1,24 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class shootAtPlayer : MonoBehaviour
 {
-    public Transform target;
-    public GameObject projectilePrefab;
+
+    public float attackRadius = 8f;
     public float shootInterval = 2f;
-    public float projectileSpeed = 0.5f;
+    public float projectileSpeed = 10f;
     public string targetTag = "Player";
 
+    public GameObject projectilePrefab;
 
+    private Transform target;
+    private NavMeshAgent agent;
     private float nextShotTime;
 
     void Start()
     {
-    transform.position += transform.forward * 0.2f;
+        //new script start
+        agent = GetComponent<NavMeshAgent>();
 
         GameObject playerObj = GameObject.FindGameObjectWithTag(targetTag);
         if (playerObj != null)
@@ -30,12 +35,23 @@ public class shootAtPlayer : MonoBehaviour
     void Update()
     {
 		if(target == null) return;
-        transform.LookAt(target);
+        float distance = Vector3.Distance(transform.position, target.position);
 
-        if (Time.time > nextShotTime)
+        //chase
+        if (distance > attackRadius)
         {
-            Shoot();
-            nextShotTime = Time.time + shootInterval;
+            agent.isStopped = false;
+            agent.SetDestination(target.position);
+        }
+        else
+        {
+            agent.isStopped = true;
+            transform.LookAt(target);
+            if (Time.time > nextShotTime)
+            {
+                Shoot();
+                nextShotTime = Time.time + shootInterval;
+            }
         }
     }
 
