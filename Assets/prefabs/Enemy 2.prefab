@@ -132,7 +132,6 @@ MonoBehaviour:
   speed: 2
   withinRange: 50
   targetTag: Player
-  damageTag: Card
 --- !u!114 &3835852470313017998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,8 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8a415576767d5345832b4a3bcb8506c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  maxHealth: 30
-  currentHealth: 0
+  maxHealth: 100
+  currentHealth: 100
   destroyOnDeath: 1
   healthBar: {fileID: 8578524357296174415}
 --- !u!1001 &7909101432230800750
