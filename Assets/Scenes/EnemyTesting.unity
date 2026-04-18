@@ -279,7 +279,7 @@ MonoBehaviour:
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 17e6e9c85d8464f1f83a12232d07a4c7, type: 2}
-  m_BuildHeightMesh: 0
+  m_BuildHeightMesh: 1
 --- !u!4 &66204505
 Transform:
   m_ObjectHideFlags: 0
@@ -540,10 +540,7 @@ MonoBehaviour:
   target: {fileID: 167167657}
   cameraOffset: {fileID: 1825436375}
   enemyTypes:
-  - {fileID: 11400000, guid: 7fcacef063a4842a087eb2d095227ceb, type: 2}
-  - {fileID: 11400000, guid: 9ece6528095fb4122961011b324de438, type: 2}
   - {fileID: 11400000, guid: aebfe6b66467a4348abc17bd1421c3e8, type: 2}
-  - {fileID: 11400000, guid: ba7a74b1ce1604c6f97d562f005d09ae, type: 2}
   spawnPoints:
   - {fileID: 790876477}
   - {fileID: 2116134694}
@@ -1556,7 +1553,7 @@ Transform:
   m_GameObject: {fileID: 790876476}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24, y: 0, z: 24}
+  m_LocalPosition: {x: 23.142, y: 0, z: 22.793}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
