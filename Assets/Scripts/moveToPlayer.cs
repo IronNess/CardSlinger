@@ -13,6 +13,8 @@ public class moveToPlayer : MonoBehaviour
     public string targetTag = "Player";
     public string damageTag = "Card";
 
+    public EnemyType type;
+
     private Vector3 targetPos;
     private Animator animator;
     private NavMeshAgent agent;
@@ -41,7 +43,7 @@ public class moveToPlayer : MonoBehaviour
     void Update()
     {
         bool onMesh = NavMesh.SamplePosition(transform.position, out _, 0.1f, NavMesh.AllAreas);
-        Debug.Log("On NavMesh: " + onMesh);
+        //Debug.Log("On NavMesh: " + onMesh);
         if (target == null || agent == null) return;
         targetPos = target.position;
         //targetPos.y += 1;
@@ -76,26 +78,26 @@ public class moveToPlayer : MonoBehaviour
         // Check if the collided object has the target tag
         if (other.CompareTag(targetTag))
         {
+            //stops the enemy from moving 
+            agent.isStopped = true;
+            agent.ResetPath();
+            agent.velocity = Vector3.zero;
+            animator.SetBool("IsWalking", false);
+
+            //deal damage
+            HealthSystem playerHealth = other.GetComponent<HealthSystem>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(type.damage);
+            }
             //atack animation
             animator.SetTrigger("Attack");
-            Debug.Log($"{gameObject.name} collided with {other.name}");
-#if UNITY_EDITOR
-            // Stop play mode in the Unity Editor
-            UnityEditor.EditorApplication.isPlaying = false;
-
-#else
-        // Quit the application in a build
-        Application.Quit();
-#endif
-            // Example: Stop movement or trigger animation
         }
-        // Check if the collided object has the target tag
+        //enemy hit by card
         if (other.CompareTag(damageTag))
         {
-            Debug.Log($"{gameObject.name} collided with {other.name}");
             Destroy(other.gameObject);
             Destroy(gameObject);
-            // Example: Stop movement or trigger animation
         }
     }
 
@@ -108,6 +110,7 @@ public class moveToPlayer : MonoBehaviour
 
     public void ApplyStats(EnemyType type)
     {
+        this.type = type;
         speed = type.speed;
         if(agent != null)
         {

@@ -104,7 +104,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -152,6 +152,7 @@ MonoBehaviour:
   withinRange: 999
   targetTag: Player
   damageTag: Card
+  type: {fileID: 11400000, guid: aebfe6b66467a4348abc17bd1421c3e8, type: 2}
 --- !u!1001 &7352651843805167717
 PrefabInstance:
   m_ObjectHideFlags: 0
