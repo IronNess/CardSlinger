@@ -12,6 +12,8 @@ public class shootAtPlayer : MonoBehaviour
 
     public GameObject projectilePrefab;
     public Transform ShootPoint;
+    public AudioClip rangedShootSound;
+    private AudioSource audioSource;
     private Transform target;
     private NavMeshAgent agent;
     private float nextShotTime;
@@ -21,22 +23,24 @@ public class shootAtPlayer : MonoBehaviour
         //new script start
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+
 
         GameObject playerObj = GameObject.FindGameObjectWithTag(targetTag);
         if (playerObj != null)
         {
             target = playerObj.transform;
         }
-		else
-   		 {
-        	Debug.LogWarning("No object with tag 'Player' found for ranged enemy!");
-   	 	}
+        else
+        {
+            Debug.LogWarning("No object with tag 'Player' found for ranged enemy!");
+        }
 
     }
 
     void Update()
     {
-		if(target == null) return;
+        if (target == null) return;
         float distance = Vector3.Distance(transform.position, target.position);
 
         //chase
@@ -69,13 +73,14 @@ public class shootAtPlayer : MonoBehaviour
 
     void Shoot()
     {
-        GameObject proj = Instantiate(
-            projectilePrefab,
-            transform.position + transform.forward * 0.5f + Vector3.up * 0.5f,
-            transform.rotation
-        );
+        audioSource.PlayOneShot(rangedShootSound);
 
-        proj.GetComponent<Rigidbody>().linearVelocity = transform.forward * projectileSpeed;
+        //spawn projectivle from shoot point 
+        GameObject proj = Instantiate(projectilePrefab, ShootPoint.position, ShootPoint.rotation);
+
+
+        Rigidbody rb = proj.GetComponent<Rigidbody>();
+        rb.linearVelocity = ShootPoint.forward * projectileSpeed; 
     }
 
 }

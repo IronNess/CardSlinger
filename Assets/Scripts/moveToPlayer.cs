@@ -14,10 +14,12 @@ public class moveToPlayer : MonoBehaviour
     public string damageTag = "Card";
 
     public EnemyType type;
+    public AudioClip meleeHitSound;
 
     private Vector3 targetPos;
     private Animator animator;
     private NavMeshAgent agent;
+    private AudioSource audioSource;
 
 
 
@@ -25,9 +27,10 @@ public class moveToPlayer : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
      void Start()
     {
-        //new script start
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+
 
         //GameObject playerObj = GameObject.FindGameObjectWithTag(targetTag);
         if (agent != null)
@@ -88,6 +91,7 @@ public class moveToPlayer : MonoBehaviour
             HealthSystem playerHealth = other.GetComponent<HealthSystem>();
             if (playerHealth != null)
             {
+                audioSource.PlayOneShot(meleeHitSound);
                 playerHealth.TakeDamage(type.damage);
             }
             //atack animation
