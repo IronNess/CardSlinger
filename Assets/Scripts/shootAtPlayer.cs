@@ -7,7 +7,7 @@ public class shootAtPlayer : MonoBehaviour
 
     public float attackRadius = 8f;
     public float shootInterval = 2f;
-    public float projectileSpeed = 10f;
+    public float projectileSpeed = 3;
     public string targetTag = "Player";
 
     public GameObject projectilePrefab;
@@ -18,12 +18,15 @@ public class shootAtPlayer : MonoBehaviour
     private NavMeshAgent agent;
     private float nextShotTime;
 
+    private EnemyHealth enemyHealth;
+
     void Start()
     {
         //new script start
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        enemyHealth = GetComponent<EnemyHealth>();
 
 
         GameObject playerObj = GameObject.FindGameObjectWithTag(targetTag);
@@ -81,6 +84,19 @@ public class shootAtPlayer : MonoBehaviour
 
         Rigidbody rb = proj.GetComponent<Rigidbody>();
         rb.linearVelocity = ShootPoint.forward * projectileSpeed; 
+    }
+    public void ApplyStats(EnemyType type)
+    {
+        
+        if (agent != null)
+        {
+            agent.speed = type.speed;
+        }
+        if (enemyHealth != null)
+        {
+        enemyHealth.maxHealth = type.health;
+        enemyHealth.currentHealth = type.health;
+        }
     }
 
 }

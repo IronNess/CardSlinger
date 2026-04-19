@@ -101,7 +101,12 @@ public class moveToPlayer : MonoBehaviour
         if (other.CompareTag(damageTag))
         {
             Destroy(other.gameObject);
-            Destroy(gameObject);
+
+            EnemyHealth health = GetComponent<EnemyHealth>();
+            if (health != null)
+            {
+                health.TakeDamage(type.damage);
+            }
         }
     }
 
@@ -116,9 +121,15 @@ public class moveToPlayer : MonoBehaviour
     {
         this.type = type;
         speed = type.speed;
-        if(agent != null)
+        if (agent != null)
         {
             agent.speed = speed;
         }
+          EnemyHealth health = GetComponent<EnemyHealth>();
+    if (health != null)
+    {
+        health.maxHealth = type.health;
+        health.currentHealth = type.health;
+    }
     }
 }
