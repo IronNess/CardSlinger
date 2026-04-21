@@ -17,3 +17,4 @@ MonoBehaviour:
   speed: 0.4
   health: 100
   damage: 20
+  spawnWeight: 10
