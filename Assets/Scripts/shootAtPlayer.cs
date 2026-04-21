@@ -7,7 +7,7 @@ public class shootAtPlayer : MonoBehaviour
 
     public float attackRadius = 8f;
     public float shootInterval = 2f;
-    public float projectileSpeed = 3;
+    public float projectileSpeed = 2;
     public string targetTag = "Player";
 
     public GameObject projectilePrefab;
@@ -83,7 +83,7 @@ public class shootAtPlayer : MonoBehaviour
 
 
         Rigidbody rb = proj.GetComponent<Rigidbody>();
-        rb.linearVelocity = ShootPoint.forward * projectileSpeed; 
+        rb.linearVelocity = ShootPoint.forward * projectileSpeed;
     }
     public void ApplyStats(EnemyType type)
     {

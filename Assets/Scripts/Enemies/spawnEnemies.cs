@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class spawnEnemies : MonoBehaviour
@@ -5,14 +6,16 @@ public class spawnEnemies : MonoBehaviour
     public Transform target;
     public Transform cameraOffset;
 
-   // public GameObject enemyPrefab;
-   public EnemyType[] enemyTypes;
+    // public GameObject enemyPrefab;
+    public EnemyType[] enemyTypes;
     public Transform[] spawnPoints;
     public float spawnDelay = 3f;
     public float spawnReduction = 0.01f;
 
     private float nextSpawnTime;
     private int spawnCount = 0;
+    public int maxEnemiesAlive = 30;
+
 
     void Update()
     {
@@ -27,7 +30,7 @@ public class spawnEnemies : MonoBehaviour
     void SpawnEnemy()
     {
         //enemy type is picked
-        EnemyType type = enemyTypes[Random.Range(0, enemyTypes.Length)];
+        EnemyType type = GetWeightedEnemy();
 
         //spawn point get selected
         int spawnIndex = Random.Range(0, spawnPoints.Length);
@@ -38,16 +41,60 @@ public class spawnEnemies : MonoBehaviour
             spawnPoints[spawnIndex].rotation
         );
 
-        
-       //melee 
+        //melee 
         moveToPlayer mover = obj.GetComponent<moveToPlayer>();
-		if(mover != null) 
-		{		
-			mover.setTransforms(target, cameraOffset);
-			mover.ApplyStats(type);
-    	}
-		//range 
-		shootAtPlayer shooter = obj.GetComponent<shootAtPlayer>();
-		if ( shooter != null) {}
-}
+        if (mover != null)
+        {
+            mover.setTransforms(target, cameraOffset);
+            mover.ApplyStats(type);
+        }
+        //range 
+        shootAtPlayer shooter = obj.GetComponent<shootAtPlayer>();
+        if (shooter != null) { }
+    }
+
+    EnemyType GetWeightedEnemy()
+    {
+        int totalWeight = 0;
+
+        //sum all weights
+        foreach (EnemyType t in enemyTypes)
+            totalWeight += t.spawnWeight;
+
+        //pick a random number
+        int randomValue = Random.Range(0, totalWeight);
+
+        //find which number enemy falls into
+        foreach (EnemyType t in enemyTypes)
+        {
+            if (randomValue < t.spawnWeight)
+                return t;
+            randomValue -= t.spawnWeight;
+        }
+        return enemyTypes[0];//fallback
+    }
+    int CountEnemies()
+    {
+        return GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+    }
+    ///i added this because i am unsure how rounds will work
+    /// 
+    public void AdjustSpawnWeight(int difficultyLevel)
+    {
+        foreach (EnemyType t in enemyTypes)
+        {
+              if (t.enemyName.Contains("Slow"))
+                t.spawnWeight = Mathf.Max(5, 80 - difficultyLevel * 5);
+
+            if (t.enemyName.Contains("Fast"))
+                t.spawnWeight = 10 + difficultyLevel * 3;
+
+            if (t.enemyName.Contains("Ranged"))
+                t.spawnWeight = 5 + difficultyLevel * 2;
+
+            if (t.enemyName.Contains("Tank"))
+                t.spawnWeight = Mathf.Max(1, difficultyLevel - 3);
+        }
+    }
 }

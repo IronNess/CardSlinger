@@ -10,6 +10,9 @@ public class Projectile : MonoBehaviour
 		rb.useGravity = false;
 		rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
 		Destroy(gameObject, 8f);
+
+		//auto despawn after 8 seconds
+		Destroy(gameObject, 8f);
 	}
 	void OnCollisionEnter(Collision collision)
 	{
