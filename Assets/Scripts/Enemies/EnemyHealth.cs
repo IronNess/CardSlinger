@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class EnemyHealth : MonoBehaviour
     private AudioSource audioSource;// audio plays
     private void Awake()
     {
+        healthSlider = healthBar.GetComponent<Slider>();
+
         currentHealth = maxHealth; // Set enemy's health to full when it spwans in
         audioSource = GetComponent<AudioSource>();
     }
@@ -22,6 +25,8 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth -= amount; // Reduce current health by the damage amount
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        healthSlider.value = currentHealth; // update health fill
         Debug.Log($"{gameObject.name} took {amount} damage. Health left: {currentHealth}");
 
         StartCoroutine(HitFlash());

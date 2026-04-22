@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class spawnEnemies : MonoBehaviour
 {
+    [Header("Player References")]
     public Transform target;
     public Transform cameraOffset;
 
@@ -11,6 +12,7 @@ public class spawnEnemies : MonoBehaviour
     public Transform[] spawnPoints;
     public float spawnDelay = 3f;
     public float spawnReduction = 0.01f;
+    public int totalEnemiesToSpawn = 3; // Total number of enemies this level should spawn
 
     private float nextSpawnTime;
     private int spawnCount = 0;
@@ -19,10 +21,21 @@ public class spawnEnemies : MonoBehaviour
 
     void Update()
     {
+        // Stop spawning once the level has spawned enough enemies
+        if (spawnCount >= totalEnemiesToSpawn)
+            return;
+
         if (Time.time > nextSpawnTime)
         {
             SpawnEnemy();
-            nextSpawnTime = Time.time + spawnDelay - spawnCount * spawnReduction;
+
+            float currentDelay = spawnDelay - spawnCount * spawnReduction;
+
+            // Prevent the delay from becoming too low or negative
+            if (currentDelay < 0.5f)
+                currentDelay = 0.5f;
+
+            nextSpawnTime = Time.time + currentDelay;
             spawnCount++;
         }
     }
@@ -32,9 +45,10 @@ public class spawnEnemies : MonoBehaviour
         //enemy type is picked
         EnemyType type = GetWeightedEnemy();
 
-        //spawn point get selected
+        // Pick a random spawn point
         int spawnIndex = Random.Range(0, spawnPoints.Length);
-        //enemy spawn
+
+        // Spawn the enemy
         GameObject obj = Instantiate(
             type.prefab,
             spawnPoints[spawnIndex].position,
