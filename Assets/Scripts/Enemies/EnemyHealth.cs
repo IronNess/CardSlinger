@@ -11,6 +11,11 @@ public class EnemyHealth : MonoBehaviour
 
     [Header("Optional")]
     public bool destroyOnDeath = true; // If true, enemy object is destroyed when it dies
+
+    [Header("HealthBar")]
+    public GameObject healthBar;
+    private Slider healthSlider;
+
     public AudioClip deathSound;
     private Coroutine burnRoutine; // Stores the burn coroutine so can stop/start it safetly
     private AudioSource audioSource;// audio plays

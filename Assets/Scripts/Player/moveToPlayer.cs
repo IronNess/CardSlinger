@@ -98,6 +98,7 @@ public class moveToPlayer : MonoBehaviour
         //enemy hit by card
         if (other.CompareTag(damageTag))
         {
+            Debug.Log("Card hit");
             Destroy(other.gameObject);
 
             EnemyHealth health = GetComponent<EnemyHealth>();
