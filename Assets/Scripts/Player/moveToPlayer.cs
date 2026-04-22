@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.AI;
 public class moveToPlayer : MonoBehaviour
 {
     public Transform target;
@@ -9,41 +9,66 @@ public class moveToPlayer : MonoBehaviour
     public float withinRange = 10f;
 
     public string targetTag = "Player";
+    public string damageTag = "Card";
+
+    public EnemyType type;
+    public AudioClip meleeHitSound;
 
     private Vector3 targetPos;
+    private Animator animator;
+    private NavMeshAgent agent;
+    private AudioSource audioSource;
 
-    void Start()
+
+
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+     void Start()
     {
-        // Safety check in case target was not assigned
-        if (target == null || cameraOffset == null)
+        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+
+
+        //GameObject playerObj = GameObject.FindGameObjectWithTag(targetTag);
+        if (agent != null)
         {
-            Debug.LogWarning($"{gameObject.name} is missing target or cameraOffset.");
-            return;
+            //target = playerObj.transform;
+            agent.speed = speed;
+            agent.stoppingDistance = 1.5f;
         }
 
-        targetPos = target.position;
-        targetPos.y = cameraOffset.position.y;
-
-        // Keep enemy on ground height
-        transform.position = new Vector3(transform.position.x, 1, transform.position.z);
     }
 
     void Update()
     {
-        // Prevent errors if references are missing
-        if (target == null)
-            return;
-
+        bool onMesh = NavMesh.SamplePosition(transform.position, out _, 0.1f, NavMesh.AllAreas);
+        //Debug.Log("On NavMesh: " + onMesh);
+        if (target == null || agent == null) return;
         targetPos = target.position;
-        targetPos.y += 1;
+        //targetPos.y += 1;
 
         float distance = Vector3.Distance(targetPos, transform.position);
-
+        
         if (distance <= withinRange)
         {
-            Vector3 pos = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
-            transform.position = pos;
-            transform.LookAt(targetPos);
+            //nevagent tells the enemy where to go 
+            agent.SetDestination(targetPos);
+            //walk animation
+            bool isMoving = agent.velocity.magnitude > 0.1f;
+            animator.SetBool("IsWalking", isMoving);
+            if (isMoving)
+            {
+                Vector3 lookPos = target.position;
+                lookPos.y = transform.position.y;   
+                transform.LookAt(lookPos);
+            }
+        }
+        else
+        {
+            //idle
+            animator.SetBool("IsWalking", false);
+            agent.ResetPath();
         }
     }
 
@@ -54,13 +79,32 @@ public class moveToPlayer : MonoBehaviour
         // If enemy reaches player, end the game / stop play mode
         if (other.CompareTag(targetTag))
         {
-            Debug.Log($"{gameObject.name} collided with player");
+            //stops the enemy from moving 
+            agent.isStopped = true;
+            agent.ResetPath();
+            agent.velocity = Vector3.zero;
+            animator.SetBool("IsWalking", false);
 
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
+            //deal damage
+            HealthSystem playerHealth = other.GetComponent<HealthSystem>();
+            if (playerHealth != null)
+            {
+                audioSource.PlayOneShot(meleeHitSound);
+                playerHealth.TakeDamage(type.damage);
+            }
+            //atack animation
+            animator.SetTrigger("Attack");
+        }
+        //enemy hit by card
+        if (other.CompareTag(damageTag))
+        {
+            Destroy(other.gameObject);
+
+            EnemyHealth health = GetComponent<EnemyHealth>();
+            if (health != null)
+            {
+                health.TakeDamage(type.damage);
+            }
         }
 
         // Removed old card-destroy logic.
@@ -81,8 +125,18 @@ public class moveToPlayer : MonoBehaviour
     EnemyHealth enemyHealth = GetComponent<EnemyHealth>();
     if (enemyHealth != null)
     {
-        enemyHealth.maxHealth = type.health;
-        enemyHealth.currentHealth = type.health;
+        this.type = type;
+        speed = type.speed;
+        if (agent != null)
+        {
+            agent.speed = speed;
+        }
+          EnemyHealth health = GetComponent<EnemyHealth>();
+    if (health != null)
+    {
+        health.maxHealth = type.health;
+        health.currentHealth = type.health;
+    }
     }
 }
 }

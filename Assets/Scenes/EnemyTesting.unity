@@ -231,6 +231,70 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: -1758520528963094988, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   handAnimator: {fileID: 13344041}
+--- !u!1 &66204503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 66204505}
+  - component: {fileID: 66204504}
+  m_Layer: 0
+  m_Name: NavMesh Surface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &66204504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66204503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 17e6e9c85d8464f1f83a12232d07a4c7, type: 2}
+  m_BuildHeightMesh: 1
+--- !u!4 &66204505
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66204503}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &167167656
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,10 +540,10 @@ MonoBehaviour:
   target: {fileID: 167167657}
   cameraOffset: {fileID: 1825436375}
   enemyTypes:
+  - {fileID: 11400000, guid: ba7a74b1ce1604c6f97d562f005d09ae, type: 2}
   - {fileID: 11400000, guid: 7fcacef063a4842a087eb2d095227ceb, type: 2}
   - {fileID: 11400000, guid: 9ece6528095fb4122961011b324de438, type: 2}
   - {fileID: 11400000, guid: aebfe6b66467a4348abc17bd1421c3e8, type: 2}
-  - {fileID: 11400000, guid: ba7a74b1ce1604c6f97d562f005d09ae, type: 2}
   spawnPoints:
   - {fileID: 790876477}
   - {fileID: 2116134694}
@@ -964,7 +1028,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f56d4d9be30eb5468f0729f7d8e13eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  cardPrefab: {fileID: 106638745613667368, guid: b6f03d77ed23dfa4fa608b06ae49296e, type: 3}
+  deckManager: {fileID: 0}
   handInteractor: {fileID: 1642695305}
   deckTag: Deck
   gripValue:
@@ -1492,7 +1556,7 @@ Transform:
   m_GameObject: {fileID: 790876476}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24, y: 0, z: 24}
+  m_LocalPosition: {x: 23.142, y: 0, z: 22.793}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1642,7 +1706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f56d4d9be30eb5468f0729f7d8e13eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrawCards
-  cardPrefab: {fileID: 106638745613667368, guid: b6f03d77ed23dfa4fa608b06ae49296e, type: 3}
+  deckManager: {fileID: 0}
   handInteractor: {fileID: 1642695305}
   deckTag: Deck
   gripValue:
@@ -2758,6 +2822,8 @@ GameObject:
   - component: {fileID: 1490310132}
   - component: {fileID: 1490310131}
   - component: {fileID: 1490310130}
+  - component: {fileID: 1490310135}
+  - component: {fileID: 1490310134}
   m_Layer: 2
   m_Name: VR Player
   m_TagString: Player
@@ -2838,6 +2904,56 @@ Transform:
   - {fileID: 167167657}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1490310134
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490310129}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &1490310135
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490310129}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.46663907
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1564667310
 GameObject:
   m_ObjectHideFlags: 0
@@ -3618,3 +3734,4 @@ SceneRoots:
   - {fileID: 648105375}
   - {fileID: 280474256}
   - {fileID: 1900282600}
+  - {fileID: 66204505}

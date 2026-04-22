@@ -1,53 +1,102 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class shootAtPlayer : MonoBehaviour
 {
-    public Transform target;
-    public GameObject projectilePrefab;
+    private Animator animator;
+
+    public float attackRadius = 8f;
     public float shootInterval = 2f;
-    public float projectileSpeed = 0.5f;
+    public float projectileSpeed = 2;
     public string targetTag = "Player";
 
-
+    public GameObject projectilePrefab;
+    public Transform ShootPoint;
+    public AudioClip rangedShootSound;
+    private AudioSource audioSource;
+    private Transform target;
+    private NavMeshAgent agent;
     private float nextShotTime;
+
+    private EnemyHealth enemyHealth;
 
     void Start()
     {
-    transform.position += transform.forward * 0.2f;
+        //new script start
+        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+        enemyHealth = GetComponent<EnemyHealth>();
+
 
         GameObject playerObj = GameObject.FindGameObjectWithTag(targetTag);
         if (playerObj != null)
         {
             target = playerObj.transform;
         }
-		else
-   		 {
-        	Debug.LogWarning("No object with tag 'Player' found for ranged enemy!");
-   	 	}
+        else
+        {
+            Debug.LogWarning("No object with tag 'Player' found for ranged enemy!");
+        }
 
     }
 
     void Update()
     {
-		if(target == null) return;
-        transform.LookAt(target);
+        if (target == null) return;
+        float distance = Vector3.Distance(transform.position, target.position);
 
-        if (Time.time > nextShotTime)
+        //chase
+        if (distance > attackRadius)
         {
-            Shoot();
-            nextShotTime = Time.time + shootInterval;
+            agent.isStopped = false;
+            agent.SetDestination(target.position);
+
+            //walk animation 
+            animator.SetBool("IsWalking", true);
+        }
+        else
+        {
+            agent.isStopped = true;
+            agent.ResetPath();
+            agent.velocity = Vector3.zero;
+            animator.SetBool("IsWalking", false);
+
+            Vector3 lookPos = target.position - transform.position;
+            lookPos.y = 0; // Prevent tilting
+            transform.rotation = Quaternion.LookRotation(lookPos);
+            if (Time.time > nextShotTime)
+            {
+                animator.SetTrigger("Attack");
+                Shoot();
+                nextShotTime = Time.time + shootInterval;
+            }
         }
     }
 
     void Shoot()
     {
-        GameObject proj = Instantiate(
-            projectilePrefab,
-            transform.position + transform.forward * 0.5f + Vector3.up * 0.5f,
-            transform.rotation
-        );
+        audioSource.PlayOneShot(rangedShootSound);
 
-        proj.GetComponent<Rigidbody>().linearVelocity = transform.forward * projectileSpeed;
+        //spawn projectivle from shoot point 
+        GameObject proj = Instantiate(projectilePrefab, ShootPoint.position, ShootPoint.rotation);
+
+
+        Rigidbody rb = proj.GetComponent<Rigidbody>();
+        rb.linearVelocity = ShootPoint.forward * projectileSpeed;
+    }
+    public void ApplyStats(EnemyType type)
+    {
+        
+        if (agent != null)
+        {
+            agent.speed = type.speed;
+        }
+        if (enemyHealth != null)
+        {
+        enemyHealth.maxHealth = type.health;
+        enemyHealth.currentHealth = type.health;
+        }
     }
 
 }
