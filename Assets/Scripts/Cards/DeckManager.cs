@@ -12,6 +12,8 @@ public class DeckManager : MonoBehaviour
 
     private PersistentDeckState persistentDeck;
 
+    private int maxDeckCount;
+
     private void Start()
     {
         persistentDeck = PersistentDeckState.Instance;
@@ -21,7 +23,7 @@ public class DeckManager : MonoBehaviour
             Debug.LogError("No PersistentDeckState found in scene.");
             return;
         }
-
+        maxDeckCount = persistentDeck.startingDeck.Count;
         UpdateDeckText();
     }
 
@@ -93,7 +95,7 @@ public class DeckManager : MonoBehaviour
         if (textCount != null && persistentDeck != null)
         {
             textCount.text = persistentDeck.drawPile.Count + "/" +
-                             persistentDeck.startingDeck.Count;
+                             maxDeckCount;
         }
     }
 }
