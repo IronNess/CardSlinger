@@ -1503,57 +1503,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 548361178}
   m_CullTransparentMesh: 1
---- !u!1 &621818204
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 621818206}
-  - component: {fileID: 621818205}
-  m_Layer: 0
-  m_Name: PersistentDeckState
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &621818205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 621818204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 937d01ccf35cc5146a8c38fe19d4c4aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PersistentDeckState
-  startingDeck:
-  - {fileID: 7189709518574677280, guid: d7dc116dcbed4fb44982a0cd01463b56, type: 3}
-  - {fileID: 1321502302070146014, guid: 07ff0ddec523e514686b37fb012ead23, type: 3}
-  - {fileID: 7945002998670302072, guid: dcc06f978e333de4088901da20d8c688, type: 3}
-  - {fileID: 1621712922959446906, guid: c549bc1e442845a4eba180cefa5eba76, type: 3}
-  drawPile: []
-  discardPile: []
---- !u!4 &621818206
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 621818204}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.54941, y: -0, z: 6.67446}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &650959517
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3052,6 +3001,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1271297976}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5065316899029686060
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1648050956256486300, guid: 0aabaa3b385b1c243a118eb153ea689d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.54941
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648050956256486300, guid: 0aabaa3b385b1c243a118eb153ea689d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648050956256486300, guid: 0aabaa3b385b1c243a118eb153ea689d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.67446
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648050956256486300, guid: 0aabaa3b385b1c243a118eb153ea689d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648050956256486300, guid: 0aabaa3b385b1c243a118eb153ea689d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648050956256486300, guid: 0aabaa3b385b1c243a118eb153ea689d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648050956256486300, guid: 0aabaa3b385b1c243a118eb153ea689d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648050956256486300, guid: 0aabaa3b385b1c243a118eb153ea689d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648050956256486300, guid: 0aabaa3b385b1c243a118eb153ea689d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648050956256486300, guid: 0aabaa3b385b1c243a118eb153ea689d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6159913643845170788, guid: 0aabaa3b385b1c243a118eb153ea689d, type: 3}
+      propertyPath: m_Name
+      value: PersistentDeckState
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0aabaa3b385b1c243a118eb153ea689d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3067,7 +3073,7 @@ SceneRoots:
   - {fileID: 116054608}
   - {fileID: 1838246998}
   - {fileID: 857266127}
-  - {fileID: 621818206}
+  - {fileID: 5065316899029686060}
   - {fileID: 1685596819}
   - {fileID: 160663631}
   - {fileID: 107227337}

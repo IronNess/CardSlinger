@@ -34,6 +34,7 @@ public class DeckManager : MonoBehaviour
 
         GameObject cardPrefab = persistentDeck.DrawCard();
         UpdateDeckText();
+        DiscardCard(cardPrefab);
         return cardPrefab;
     }
 
