@@ -18,17 +18,27 @@ public class PersistentDeckState : MonoBehaviour
     private void Awake()
     {
         // Singleton pattern: only allow one persistent deck object
-        if (Instance != null && Instance != this)
+        /*if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);*/
 
-        // If this is the first time the object exists, create a fresh run
-        if (drawPile.Count == 0 && discardPile.Count == 0)
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+            // If this is the first time the object exists, create a fresh run
+            if (drawPile.Count != startingDeck.Count)
         {
             ResetDeckToStartingDeck();
         }
@@ -78,7 +88,7 @@ public class PersistentDeckState : MonoBehaviour
     /// Useful when buying a new card from the shop.
      public void AddCard(GameObject cardPrefab)
     {
-        drawPile.Add(cardPrefab);
+        startingDeck.Add(cardPrefab);
         Debug.Log("Added card to persistent deck: " + cardPrefab.name);
     }
 
@@ -125,8 +135,10 @@ public class PersistentDeckState : MonoBehaviour
    
     public void ReshuffleDiscardIntoDraw()
     {
-        drawPile.AddRange(discardPile);
+        drawPile.Clear();
         discardPile.Clear();
+
+        drawPile.AddRange(startingDeck);
         Shuffle(drawPile);
 
         Debug.Log("Discard reshuffled into draw pile.");
