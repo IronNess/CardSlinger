@@ -9,6 +9,9 @@ public class shootAtPlayer : MonoBehaviour
     public float shootInterval = 2f;
     public float projectileSpeed = 2;
     public string targetTag = "Player";
+    public string damageTag = "Card";
+
+    public EnemyType type;
 
     public GameObject projectilePrefab;
     public Transform ShootPoint;
@@ -100,4 +103,24 @@ public class shootAtPlayer : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log($"{gameObject.name} collided with {other.name}");
+
+        //enemy hit by card
+        if (other.CompareTag(damageTag))
+        {
+            Debug.Log("Card hit");
+            Destroy(other.gameObject);
+
+            EnemyHealth health = GetComponent<EnemyHealth>();
+            if (health != null)
+            {
+                health.TakeDamage(other.gameObject.GetComponent<CardProjectile>().damage);
+            }
+        }
+
+        // Removed old card-destroy logic.
+        // Enemy damage should now be handled by CardProjectile and EnemyHealth 
+    }
 }
