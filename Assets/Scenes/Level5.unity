@@ -707,8 +707,8 @@ Canvas:
   m_GameObject: {fileID: 116054604}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1402546064}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -4067,6 +4067,14 @@ PrefabInstance:
       propertyPath: cameraOffset
       value: 
       objectReference: {fileID: 1062437128}
+    - target: {fileID: 2160194636266081482, guid: 04e7574c9db929c42b0a70c7ef151329, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d6f339dc39404fd42b7e31e21778a444, type: 2}
+    - target: {fileID: 2160194636266081482, guid: 04e7574c9db929c42b0a70c7ef151329, type: 3}
+      propertyPath: m_UpdateMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3179372076106729255, guid: 04e7574c9db929c42b0a70c7ef151329, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -6912,11 +6920,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5309091476596631581, guid: c7e881fb794d3704399dba807f58a163, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2775656
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 5309091476596631581, guid: c7e881fb794d3704399dba807f58a163, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.9924873
+      value: 0.99
       objectReference: {fileID: 0}
     - target: {fileID: 5309091476596631581, guid: c7e881fb794d3704399dba807f58a163, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8806,6 +8814,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 58c79ebc04f48c74fa4869c3f7d941fd, type: 3}
   m_PrefabInstance: {fileID: 1400271799}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &1402546064 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4799195163702540681, guid: c7e881fb794d3704399dba807f58a163, type: 3}
+  m_PrefabInstance: {fileID: 1062437127}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1408614848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9745,6 +9758,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 785298680343362991, guid: f452dbe2329294c408d5111f2ed72522, type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2909269718573857942, guid: f452dbe2329294c408d5111f2ed72522, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -12531,6 +12548,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 785298680343362991, guid: f452dbe2329294c408d5111f2ed72522, type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2909269718573857942, guid: f452dbe2329294c408d5111f2ed72522, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
