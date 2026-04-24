@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,25 +16,15 @@ public class EnemyHealth : MonoBehaviour
     public GameObject healthBar;
     private Slider healthSlider;
 
+    public AudioClip deathSound;
     private Coroutine burnRoutine; // Stores the burn coroutine so can stop/start it safetly
-
-    private Camera mainCamera; // used to always angle healthbar towards the player
-
+    private AudioSource audioSource;// audio plays
     private void Awake()
     {
         healthSlider = healthBar.GetComponent<Slider>();
 
         currentHealth = maxHealth; // Set enemy's health to full when it spwans in
-        healthSlider.maxValue = maxHealth; // update health fill
-        healthSlider.value = currentHealth; // update health fill
-
-        mainCamera = Camera.main;
-    }
-
-    private void Update()
-    {
-        // Always face the camera
-        healthBar.transform.rotation = Quaternion.LookRotation(healthBar.transform.position - mainCamera.transform.position);
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void TakeDamage(float amount)
@@ -43,10 +34,24 @@ public class EnemyHealth : MonoBehaviour
         healthSlider.value = currentHealth; // update health fill
         Debug.Log($"{gameObject.name} took {amount} damage. Health left: {currentHealth}");
 
+        StartCoroutine(HitFlash());
         if (currentHealth <= 0f) // If health reaches 0 or below, kill the enemy
         {
             Die();
         }
+    }
+    //added a hitflash so the player knows the enemy got hit
+    private IEnumerator HitFlash()
+    {
+        Renderer[] rends = GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer r in rends)
+            r.material.color = Color.red;
+
+        yield return new WaitForSeconds(0.1f);
+
+        foreach (Renderer r in rends)
+            r.material.color = Color.white;
     }
 
     public void ApplyBurn(float damagePerTick, float tickInterval, int tickCount)
@@ -79,10 +84,23 @@ public class EnemyHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log($"{gameObject.name} died.");
+        StartCoroutine(deathFlash());
+
+        if (deathSound != null && audioSource != null)
+            audioSource.PlayOneShot(deathSound);
 
         if (destroyOnDeath) // Destroy the enemy object if enabled
         {
             Destroy(gameObject);
         }
+    }
+    
+    private IEnumerator deathFlash()
+    {
+        Renderer[] rends = GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer r in rends)
+            r.material.color = Color.red;
+        yield return new WaitForSeconds(0.15f);
     }
 }
