@@ -39,6 +39,9 @@ public class CardProjectile : MonoBehaviour
     public bool destroyOnEnemyHit = true;    // Destroy when hitting an enemy
     public bool destroyAfterLifetime = true; // Destroy after landing timer finishes
 
+    [Header("Audio")]
+    public AudioClip thudSound;
+    private AudioSource audioSource;
     private Rigidbody rb;                    // Card rigidbody
     private XRGrabInteractable grabInteractable; // XR grab script
 
@@ -50,6 +53,8 @@ public class CardProjectile : MonoBehaviour
 
     private void Awake()
     {
+        //audio 
+        audioSource = GetComponent<AudioSource>();
         // Get references when the object is created
         rb = GetComponent<Rigidbody>();
         grabInteractable = GetComponent<XRGrabInteractable>();
@@ -200,6 +205,9 @@ public class CardProjectile : MonoBehaviour
                     }
                     return;
             }
+            //now the thud sound is here because if player throws card not on the player it makes a thud
+            if (thudSound != null && audioSource != null)
+                audioSource.PlayOneShot(thudSound);
             // If it hit anything else, begin landing/despawn logic
             StartGroundTimer();
         }
