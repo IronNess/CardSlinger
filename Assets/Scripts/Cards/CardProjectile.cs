@@ -40,7 +40,8 @@ public class CardProjectile : MonoBehaviour
     public bool destroyAfterLifetime = true; // Destroy after landing timer finishes
 
     [Header("Audio")]
-    public AudioClip thudSound;
+    public AudioClip thudSound; //for when card hits anything besides the player
+    public AudioClip hitEnemySound; //when a card hits an enemy
     private AudioSource audioSource;
     private Rigidbody rb;                    // Card rigidbody
     private XRGrabInteractable grabInteractable; // XR grab script
@@ -146,6 +147,7 @@ public class CardProjectile : MonoBehaviour
         // Check if the object hit is an enemy
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            if (hitEnemySound != null && audioSource) audioSource.PlayOneShot(hitEnemySound);
             EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
 
             if (enemyHealth != null)
