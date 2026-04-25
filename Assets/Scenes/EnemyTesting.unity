@@ -2823,6 +2823,7 @@ GameObject:
   - component: {fileID: 1490310130}
   - component: {fileID: 1490310135}
   - component: {fileID: 1490310134}
+  - component: {fileID: 1490310136}
   m_Layer: 2
   m_Name: VR Player
   m_TagString: Player
@@ -2953,6 +2954,21 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &1490310136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490310129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8c641c2ebbfc6642a8e75168c4983a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
+  maxHealth: 100
+  healthSlider: {fileID: 0}
+  InvincibilityDuration: 4
 --- !u!1 &1564667310
 GameObject:
   m_ObjectHideFlags: 0
