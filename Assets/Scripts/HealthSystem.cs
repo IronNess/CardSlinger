@@ -10,7 +10,7 @@ public class HealthSystem : MonoBehaviour
     public Slider healthSlider;
 
     [Header("Invincibility Frames")]
-    public float InvincibilityDuration = 4f; //how long player is invincible
+    public float InvincibilityDuration = 2f; //how long player is invincible
     private bool isInvincible = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

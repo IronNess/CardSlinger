@@ -24,10 +24,14 @@ public class moveToPlayer : MonoBehaviour
     private float attackCooldown = 1.5f;   // delay between attacks
     private float attackHitDelay = 0.6f;
 
+    //footstep sound
+    public AudioClip footstepSound;
+    public float footsteppInterval = 0.5f;
+    private float footstepTimer = 0f;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-     void Start()
+    void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
@@ -72,6 +76,22 @@ public class moveToPlayer : MonoBehaviour
                 lookPos.y = transform.position.y;
                 transform.LookAt(lookPos);
             }
+            //footsteop sound
+            if (isMoving && !isAttacking)
+            {
+                footstepTimer -= Time.deltaTime;
+                if (footstepTimer <= 0f)
+                {
+                    if (footstepSound != null)
+                        audioSource.PlayOneShot(footstepSound);
+                    footstepTimer = footsteppInterval;
+                }
+            }
+            else
+            {
+                footstepTimer = 0f;
+            }
+        
 
             //close enough to attack
             if (distance <= agent.stoppingDistance + 0.5f)

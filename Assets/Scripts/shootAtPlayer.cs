@@ -12,7 +12,11 @@ public class shootAtPlayer : MonoBehaviour
 
     public GameObject projectilePrefab;
     public Transform ShootPoint;
+    [Header("Audio")]
     public AudioClip rangedShootSound;
+    public AudioClip footstepSound;
+    public float footstepInterval = 0.5f;
+    private float footstepTimer = 0f;    
     private AudioSource audioSource;
     private Transform target;
     private NavMeshAgent agent;
@@ -51,18 +55,35 @@ public class shootAtPlayer : MonoBehaviour
         {
             agent.isStopped = false;
             agent.SetDestination(target.position);
+            bool isMoving = agent.velocity.magnitude > 0.1f;
 
             //walk animation 
-            animator.SetBool("IsWalking", true);
-            return;
+        
+            animator.SetBool("IsWalking", isMoving);
+            if (isMoving)
+            {
+                footstepTimer -= Time.deltaTime;
+
+                if (footstepTimer <= 0f)
+                {
+                    if (footstepSound != null) 
+                    audioSource.PlayOneShot(footstepSound);
+                    footstepTimer = footstepInterval;
+                }
+            }
+             else
+            {
+                footstepTimer = 0f;
+            }
+
+            return; 
         }
-        else
-        {
+        
             agent.isStopped = true;
             agent.ResetPath();
             agent.velocity = Vector3.zero;
             animator.SetBool("IsWalking", false);
-
+            footstepTimer = 0f;
             Vector3 lookPos = target.position - transform.position;
             lookPos.y = 0; // Prevent tilting
             transform.rotation = Quaternion.LookRotation(lookPos);
@@ -72,7 +93,7 @@ public class shootAtPlayer : MonoBehaviour
                 Shoot();
                 nextShotTime = Time.time + shootInterval;
             }
-        }
+        
     }
 
     void Shoot()

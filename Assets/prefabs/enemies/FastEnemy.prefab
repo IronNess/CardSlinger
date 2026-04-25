@@ -104,6 +104,8 @@ MonoBehaviour:
   damageTag: Card
   type: {fileID: 11400000, guid: 7fcacef063a4842a087eb2d095227ceb, type: 2}
   meleeHitSound: {fileID: 8300000, guid: 27fa3392ca42048baa225defb87b3a16, type: 3}
+  footstepSound: {fileID: 8300000, guid: c886115a8e074476c82ca666fef3ccd0, type: 3}
+  footsteppInterval: 0.5
 --- !u!95 &2160194636266081482
 Animator:
   serializedVersion: 7
