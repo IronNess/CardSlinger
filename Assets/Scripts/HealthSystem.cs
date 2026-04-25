@@ -9,6 +9,10 @@ public class HealthSystem : MonoBehaviour
     [Header("UI")]
     public Slider healthSlider;
 
+    [Header("Invincibility Frames")]
+    public float InvincibilityDuration = 4f; //how long player is invincible
+    private bool isInvincible = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,9 +26,14 @@ public class HealthSystem : MonoBehaviour
     //apply damage
     public void TakeDamage(float amount)
     {
+        //ignore damage if invincible
+        if (isInvincible)
+            return;
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         UpdateUI();
+        //start invinicibility frames
+        StartCoroutine(InvincibilityRoutine());
     }
 
     //heal
@@ -33,6 +42,14 @@ public class HealthSystem : MonoBehaviour
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         UpdateUI();
+    }
+
+    //the invincible frames
+        private System.Collections.IEnumerator InvincibilityRoutine()
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(InvincibilityDuration);
+        isInvincible = false;
     }
 
     void UpdateUI()

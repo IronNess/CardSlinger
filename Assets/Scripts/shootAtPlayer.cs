@@ -54,6 +54,7 @@ public class shootAtPlayer : MonoBehaviour
 
             //walk animation 
             animator.SetBool("IsWalking", true);
+            return;
         }
         else
         {

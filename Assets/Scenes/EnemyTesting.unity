@@ -540,10 +540,7 @@ MonoBehaviour:
   target: {fileID: 167167657}
   cameraOffset: {fileID: 1825436375}
   enemyTypes:
-  - {fileID: 11400000, guid: ba7a74b1ce1604c6f97d562f005d09ae, type: 2}
-  - {fileID: 11400000, guid: 7fcacef063a4842a087eb2d095227ceb, type: 2}
   - {fileID: 11400000, guid: 9ece6528095fb4122961011b324de438, type: 2}
-  - {fileID: 11400000, guid: aebfe6b66467a4348abc17bd1421c3e8, type: 2}
   spawnPoints:
   - {fileID: 790876477}
   - {fileID: 2116134694}
@@ -551,6 +548,8 @@ MonoBehaviour:
   - {fileID: 1361972423}
   spawnDelay: 5
   spawnReduction: 0.005
+  totalEnemiesToSpawn: 3
+  maxEnemiesAlive: 30
 --- !u!4 &280474256
 Transform:
   m_ObjectHideFlags: 0
