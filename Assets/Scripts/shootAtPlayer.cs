@@ -7,7 +7,7 @@ public class shootAtPlayer : MonoBehaviour
 
     public float attackRadius = 8f;
     public float shootInterval = 2f;
-    public float projectileSpeed = 2;
+    public float projectileSpeed = 2f;
     public string targetTag = "Player";
     public string damageTag = "Card";
 
@@ -15,24 +15,28 @@ public class shootAtPlayer : MonoBehaviour
 
     public GameObject projectilePrefab;
     public Transform ShootPoint;
+
+    [Header("Audio")]
     public AudioClip rangedShootSound;
+    public AudioClip footstepSound;
+    public float footstepInterval = 0.5f;
+
+    private float footstepTimer = 0f;
     private AudioSource audioSource;
     private Transform target;
     private NavMeshAgent agent;
     private float nextShotTime;
-
     private EnemyHealth enemyHealth;
 
     void Start()
     {
-        //new script start
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         enemyHealth = GetComponent<EnemyHealth>();
 
-
         GameObject playerObj = GameObject.FindGameObjectWithTag(targetTag);
+
         if (playerObj != null)
         {
             target = playerObj.transform;
@@ -41,65 +45,99 @@ public class shootAtPlayer : MonoBehaviour
         {
             Debug.LogWarning("No object with tag 'Player' found for ranged enemy!");
         }
-
     }
 
     void Update()
     {
         if (target == null) return;
+
         float distance = Vector3.Distance(transform.position, target.position);
 
-        //chase
+        // Chase player if outside attack radius
         if (distance > attackRadius)
         {
             agent.isStopped = false;
             agent.SetDestination(target.position);
 
-            //walk animation 
-            animator.SetBool("IsWalking", true);
-            animator.SetBool("Attack", false);
-        }
-        else
-        {
-            agent.isStopped = true;
-            agent.ResetPath();
-            agent.velocity = Vector3.zero;
-            animator.SetBool("IsWalking", false);
+            bool isMoving = agent.velocity.magnitude > 0.1f;
 
-            Vector3 lookPos = target.position - transform.position;
-            lookPos.y = 0; // Prevent tilting
-            transform.rotation = Quaternion.LookRotation(lookPos);
-            if (Time.time > nextShotTime)
+            animator.SetBool("IsWalking", isMoving);
+            animator.SetBool("Attack", false);
+
+            if (isMoving)
             {
-                animator.SetTrigger("Attack");
-                Shoot();
-                nextShotTime = Time.time + shootInterval;
+                footstepTimer -= Time.deltaTime;
+
+                if (footstepTimer <= 0f)
+                {
+                    if (footstepSound != null && audioSource != null)
+                    {
+                        audioSource.PlayOneShot(footstepSound);
+                    }
+
+                    footstepTimer = footstepInterval;
+                }
             }
+            else
+            {
+                footstepTimer = 0f;
+            }
+
+            return;
+        }
+
+        // Stop and shoot when inside attack radius
+        agent.isStopped = true;
+        agent.ResetPath();
+        agent.velocity = Vector3.zero;
+
+        animator.SetBool("IsWalking", false);
+        footstepTimer = 0f;
+
+        Vector3 lookPos = target.position - transform.position;
+        lookPos.y = 0;
+
+        if (lookPos != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(lookPos);
+        }
+
+        if (Time.time > nextShotTime)
+        {
+            animator.SetTrigger("Attack");
+            Shoot();
+            nextShotTime = Time.time + shootInterval;
         }
     }
 
     void Shoot()
     {
-        audioSource.PlayOneShot(rangedShootSound);
+        if (rangedShootSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(rangedShootSound);
+        }
 
-        //spawn projectivle from shoot point 
         GameObject proj = Instantiate(projectilePrefab, ShootPoint.position, ShootPoint.rotation);
 
-
         Rigidbody rb = proj.GetComponent<Rigidbody>();
-        rb.linearVelocity = ShootPoint.forward * projectileSpeed;
+
+        if (rb != null)
+        {
+            rb.linearVelocity = ShootPoint.forward * projectileSpeed;
+        }
     }
+
     public void ApplyStats(EnemyType type)
     {
-        
         if (agent != null)
         {
             agent.speed = type.speed;
         }
+
         if (enemyHealth != null)
         {
-        enemyHealth.maxHealth = type.health;
-        enemyHealth.currentHealth = type.health;
+            enemyHealth.maxHealth = type.health;
+            enemyHealth.currentHealth = type.health;
         }
     }
 
@@ -107,20 +145,18 @@ public class shootAtPlayer : MonoBehaviour
     {
         Debug.Log($"{gameObject.name} collided with {other.name}");
 
-        //enemy hit by card
         if (other.CompareTag(damageTag))
         {
             Debug.Log("Card hit");
-            Destroy(other.gameObject);
 
-            EnemyHealth health = GetComponent<EnemyHealth>();
-            if (health != null)
+            CardProjectile cardProjectile = other.gameObject.GetComponent<CardProjectile>();
+
+            if (enemyHealth != null && cardProjectile != null)
             {
-                health.TakeDamage(other.gameObject.GetComponent<CardProjectile>().damage);
+                enemyHealth.TakeDamage(cardProjectile.damage);
             }
-        }
 
-        // Removed old card-destroy logic.
-        // Enemy damage should now be handled by CardProjectile and EnemyHealth 
+            Destroy(other.gameObject);
+        }
     }
 }

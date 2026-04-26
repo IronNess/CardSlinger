@@ -15,9 +15,16 @@ public class shopCard : MonoBehaviour
 
     private shopHandler playerShop;
 
+    //sound effects
+    [Header("Audio")]
+    public AudioClip purchaseSuccessSound; // success when purchase
+    public AudioClip purchaseFailSound; //failure to buy 
+    private AudioSource audioSource;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         displayCost = GetComponentInChildren<TextMeshProUGUI>();
         displayCost.text = "Cost: " + cost.ToString();
 
@@ -39,6 +46,7 @@ public class shopCard : MonoBehaviour
     {
         if (playerShop.playerMoney >= cost)
         {
+            if (purchaseSuccessSound != null) audioSource.PlayOneShot(purchaseSuccessSound);
             Debug.Log("bought");
             playerShop.buyCard(cardType, cost);
             button.onClick.RemoveListener(clicked);
@@ -47,6 +55,8 @@ public class shopCard : MonoBehaviour
         else
         {
             Debug.Log("not enough");
+            if (purchaseFailSound != null) audioSource.PlayOneShot(purchaseFailSound);
+
         }
     }
 

@@ -1,3 +1,4 @@
+using UnityEditor.AdaptivePerformance.Editor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -15,7 +16,15 @@ public class DrawCards : MonoBehaviour
     private bool touchingDeck;               // True if the hand is currently touching the deck
     private bool cardIsSpawned = false;      // Stops multiple cards spawning from one press
     private GameObject spawnedCard;          // Stores the card that was just created
+    [Header("Audio")]
+    public AudioClip drawCardSound;
+    private AudioSource audioSource;
 
+    //I added this due to audiosource soz if its wrong and fucked uo
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     void Update()
     {
         // If hand is touching the deck, grip is pressed, and no card currently spawned -> draw a card
@@ -39,7 +48,9 @@ public class DrawCards : MonoBehaviour
 
         if (cardPrefab == null)
             return;
-
+        //draw card sound
+        if (drawCardSound != null && audioSource != null)
+            audioSource.PlayOneShot(drawCardSound);
         // Spawn the card into the world
         spawnedCard = Instantiate(cardPrefab);
 

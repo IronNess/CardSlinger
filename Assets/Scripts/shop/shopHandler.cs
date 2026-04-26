@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -7,12 +6,12 @@ public class shopHandler : MonoBehaviour
     [Header("Player")]
     public int playerMoney;
     public TextMeshProUGUI balance;
-    public DeckManager deckManager;    
-    
+    public DeckManager deckManager;
+
     public GameObject fireCardPrefab;
-public GameObject teleportCardPrefab;
-public GameObject bounceCardPrefab; 
-public GameObject duplicateCardPrefab;  // Reference to deck manager
+    public GameObject teleportCardPrefab;
+    public GameObject bounceCardPrefab;
+    public GameObject duplicateCardPrefab;  // Reference to deck manager
     private PlayerCurrency currency;
 
     //[Header("Shop Inventory")]
@@ -83,23 +82,23 @@ public GameObject duplicateCardPrefab;  // Reference to deck manager
     }
 
     private GameObject GetCardPrefab(CardEffectType type)
-{
-    switch (type)
     {
-        case CardEffectType.Fire:
-            return fireCardPrefab;
+        switch (type)
+        {
+            case CardEffectType.Fire:
+                return fireCardPrefab;
 
-        case CardEffectType.Teleport:
-            return teleportCardPrefab;
+            case CardEffectType.Teleport:
+                return teleportCardPrefab;
 
-        case CardEffectType.Bounce:
-            return bounceCardPrefab;
+            case CardEffectType.Bounce:
+                return bounceCardPrefab;
 
-        case CardEffectType.Duplicate:
-        return duplicateCardPrefab;
+            case CardEffectType.Duplicate:
+                return duplicateCardPrefab;
 
-        default:
-            return null;
+            default:
+                return null;
+        }
     }
-}
 }
