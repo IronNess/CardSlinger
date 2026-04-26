@@ -23,6 +23,8 @@ public class EnemyHealth : MonoBehaviour
     {
         healthSlider = healthBar.GetComponent<Slider>();
 
+        healthSlider.maxValue = maxHealth;
+
         currentHealth = maxHealth; // Set enemy's health to full when it spwans in
         audioSource = GetComponent<AudioSource>();
     }

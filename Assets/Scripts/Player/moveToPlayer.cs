@@ -104,7 +104,7 @@ public class moveToPlayer : MonoBehaviour
             EnemyHealth health = GetComponent<EnemyHealth>();
             if (health != null)
             {
-                health.TakeDamage(type.damage);
+                health.TakeDamage(other.gameObject.GetComponent<CardProjectile>().damage);
             }
         }
 
