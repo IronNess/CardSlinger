@@ -8,6 +8,8 @@ public class EnemyHealth : MonoBehaviour
     [Header("Health")]
     public float maxHealth = 30f; // Max health the enemy starts with
     public float currentHealth; // Current health during gameplay
+    [Header("Rewards")]
+    public int moneyReward = 10;
 
     [Header("Optional")]
     public bool destroyOnDeath = true; // If true, enemy object is destroyed when it dies
@@ -87,6 +89,12 @@ public class EnemyHealth : MonoBehaviour
     {
         Debug.Log($"{gameObject.name} died.");
         StartCoroutine(deathFlash());
+
+        // Award money on kill so the player can progress through shops.
+        if (PlayerCurrency.Instance != null && moneyReward > 0)
+        {
+            PlayerCurrency.Instance.AddMoney(moneyReward);
+        }
 
         if (deathSound != null && audioSource != null)
             audioSource.PlayOneShot(deathSound);

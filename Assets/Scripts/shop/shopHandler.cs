@@ -13,6 +13,7 @@ public class shopHandler : MonoBehaviour
 public GameObject teleportCardPrefab;
 public GameObject bounceCardPrefab; 
 public GameObject duplicateCardPrefab;  // Reference to deck manager
+    private PlayerCurrency currency;
 
     //[Header("Shop Inventory")]
     //public List<ShopCardItem> cardItems = new List<ShopCardItem>();         // Cards for sale
@@ -22,12 +23,24 @@ public GameObject duplicateCardPrefab;  // Reference to deck manager
         Time.timeScale = 1f;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+        currency = PlayerCurrency.Instance;
+        if (currency == null)
+        {
+            currency = FindObjectOfType<PlayerCurrency>();
+        }
+        if (currency == null)
+        {
+            currency = gameObject.AddComponent<PlayerCurrency>();
+            currency.currentMoney = playerMoney;
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-           if (balance != null)
+        playerMoney = currency.currentMoney;
+        if (balance != null)
             balance.text = "Balance: " + playerMoney;
     }
 
@@ -39,17 +52,33 @@ public GameObject duplicateCardPrefab;  // Reference to deck manager
 
     public void buyCard(CardEffectType cardType, int cost)
     {
-        playerMoney -= cost;
+        if (!currency.Spend(cost))
+        {
+            return;
+        }
+
+        playerMoney = currency.currentMoney;
         updateBalance();
-        if (deckManager != null)
-    {
+
         GameObject newCard = GetCardPrefab(cardType); // Added so card is added to deck
-        deckManager.AddCard(newCard);
-    }
+        if (newCard == null)
+            return;
+
+        if (deckManager != null)
+        {
+            deckManager.AddCard(newCard);
+            return;
+        }
+
+        if (PersistentDeckState.Instance != null)
+        {
+            PersistentDeckState.Instance.AddCard(newCard);
+        }
     }
 
     private void updateBalance()
     {
+        playerMoney = currency != null ? currency.currentMoney : playerMoney;
         balance.text = "Balance: " + playerMoney.ToString();
     }
 

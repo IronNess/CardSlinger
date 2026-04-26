@@ -2,7 +2,35 @@ using UnityEngine;
 
 public class PlayerCurrency : MonoBehaviour
 {
+    public static PlayerCurrency Instance { get; private set; }
+
     public int currentMoney = 100; // Starting money 
+    [SerializeField] private bool persistAcrossScenes = true;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void EnsureInstanceExists()
+    {
+        if (Instance != null)
+            return;
+
+        GameObject currencyObject = new GameObject("PlayerCurrency");
+        currencyObject.AddComponent<PlayerCurrency>();
+    }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        if (persistAcrossScenes)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+    }
 
     public bool CanAfford(int cost)
     {
