@@ -22,7 +22,7 @@ public class moveToPlayer : MonoBehaviour
     private AudioSource audioSource;
     private bool isAttacking = false;
     private float attackCooldown = 1.5f;   // delay between attacks
-    private float attackHitDelay = 0.6f;
+    private float attackHitDelay = 0.3f;
 
     //footstep sound
     public AudioClip footstepSound;
@@ -43,7 +43,7 @@ public class moveToPlayer : MonoBehaviour
         {
             //target = playerObj.transform;
             agent.speed = speed;
-            agent.stoppingDistance = 1.5f;
+            agent.stoppingDistance = 0.5f;
         }
 
     }
@@ -94,7 +94,7 @@ public class moveToPlayer : MonoBehaviour
         
 
             //close enough to attack
-            if (distance <= agent.stoppingDistance + 0.5f)
+            if (distance <=0.7f)
             {
                 StartCoroutine(AttackRoutine());
             }
@@ -122,7 +122,7 @@ public class moveToPlayer : MonoBehaviour
 
         if (target != null)
         {
-            HealthSystem playerHealth = target.GetComponent<HealthSystem>();
+            HealthSystem playerHealth = target.GetComponentInParent<HealthSystem>();
             if (playerHealth != null)
             {
                 audioSource.PlayOneShot(meleeHitSound);

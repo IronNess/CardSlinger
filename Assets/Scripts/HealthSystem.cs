@@ -13,6 +13,11 @@ public class HealthSystem : MonoBehaviour
     public float InvincibilityDuration = 2f; //how long player is invincible
     private bool isInvincible = false;
 
+    //audio!
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip hitSound;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,6 +37,9 @@ public class HealthSystem : MonoBehaviour
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         UpdateUI();
+        //play sound
+        if (audioSource != null && hitSound != null) 
+        audioSource.PlayOneShot(hitSound);
         //start invinicibility frames
         StartCoroutine(InvincibilityRoutine());
     }
