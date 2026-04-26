@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class shopClicked : MonoBehaviour
 {
     public Button button;
+    [SerializeField] private string shopSceneName = "shop";
 
     private void Awake()
     {
@@ -25,7 +26,7 @@ public class shopClicked : MonoBehaviour
 
     private void clicked()
     {
-        SceneManager.LoadScene("Scenes/shop");
+        SceneManager.LoadScene(shopSceneName);
     }
 
     private void OnDestroy()

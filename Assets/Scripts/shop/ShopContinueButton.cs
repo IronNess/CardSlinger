@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class ShopContinueButton : MonoBehaviour
 {
+    [SerializeField] private string homeScene = "Home";
+
     public void ContinueGame()
     {
         if (GameProgress.Instance == null)
@@ -14,5 +16,10 @@ public class ShopContinueButton : MonoBehaviour
         string nextScene = GameProgress.Instance.GetNextLevelSceneName();
         Debug.Log("Trying to load: " + nextScene);
         SceneManager.LoadScene(nextScene);
+    }
+
+    public void LoadHome()
+    {
+        SceneManager.LoadScene(homeScene);
     }
 }
