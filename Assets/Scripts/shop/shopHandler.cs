@@ -11,8 +11,9 @@ public class shopHandler : MonoBehaviour
     
     public GameObject fireCardPrefab;
 public GameObject teleportCardPrefab;
-public GameObject bounceCardPrefab; 
-public GameObject duplicateCardPrefab;  // Reference to deck manager
+public GameObject bounceCardPrefab;
+    public GameObject duplicateCardPrefab;  // Reference to deck manager
+
 
     //[Header("Shop Inventory")]
     //public List<ShopCardItem> cardItems = new List<ShopCardItem>();         // Cards for sale
@@ -27,6 +28,7 @@ public GameObject duplicateCardPrefab;  // Reference to deck manager
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
            if (balance != null)
             balance.text = "Balance: " + playerMoney;
     }

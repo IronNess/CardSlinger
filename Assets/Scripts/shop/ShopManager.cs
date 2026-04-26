@@ -17,6 +17,7 @@ public class ShopUpgradeItem
     public string itemName;            // Name shown in UI!
     public CardEffectType effectType;  // Effect being sold!
     public int cost = 30;              // Price
+
 }
 
 public class ShopManager : MonoBehaviour
@@ -29,6 +30,16 @@ public class ShopManager : MonoBehaviour
     public List<ShopCardItem> cardItems = new List<ShopCardItem>();         // Cards for sale
     public List<ShopUpgradeItem> upgradeItems = new List<ShopUpgradeItem>(); // Upgrades for sale
 
+    [Header("Audio")]
+    public AudioClip purchaseSuccessSound; // success when purchase
+    public AudioClip purchaseFailSound; //failure to buy 
+    private AudioSource audioSource;
+
+    //adding a Start for AudioSouce
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();   
+    }
     public bool BuyCard(int index)
     {
         // Prevent invalid shop index
@@ -41,12 +52,16 @@ public class ShopManager : MonoBehaviour
         if (!playerCurrency.Spend(item.cost))
         {
             Debug.Log("Not enough money to buy card.");
+
+            //audio
+            if (purchaseFailSound != null) audioSource.PlayOneShot(purchaseFailSound);
             return false;
         }
 
         // Add bought card to deck
         deckManager.AddCard(item.cardPrefab);
         Debug.Log($"Bought card: {item.itemName}");
+        if (purchaseSuccessSound != null) audioSource.PlayOneShot(purchaseSuccessSound);
         return true;
     }
 
@@ -62,6 +77,7 @@ public class ShopManager : MonoBehaviour
         if (!playerCurrency.Spend(item.cost))
         {
             Debug.Log("Not enough money to buy upgrade.");
+            if (purchaseFailSound != null) audioSource.PlayOneShot(purchaseFailSound);
             return false;
         }
 
@@ -78,6 +94,8 @@ public class ShopManager : MonoBehaviour
         projectile.effectType = item.effectType;
 
         Debug.Log($"Bought upgrade: {item.itemName} for {targetCardPrefab.name}");
+        if (purchaseSuccessSound != null) audioSource.PlayOneShot(purchaseSuccessSound); //buy item sound
+
         return true;
     }
 }
