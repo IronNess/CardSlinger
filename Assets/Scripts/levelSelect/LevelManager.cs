@@ -1,12 +1,22 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class LevelManager : MonoBehaviour
 {
     private bool levelComplete = false;
 
     public GameObject levelSelect;
+    //unsure but i am adding it here
+    [Header("Audio")]
+    public AudioClip victorySound;
+    private AudioSource audioSource;
 
+    //adding this because of audioSource
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     void Update()
     {
         if (levelComplete)
@@ -24,6 +34,9 @@ public class LevelManager : MonoBehaviour
     {
         levelComplete = true;
         Debug.Log("Level Complete!");
+
+        //audio effect when player gets a victory sound
+        if (victorySound != null && audioSource != null) audioSource.PlayOneShot(victorySound);
 
         if (GameProgress.Instance != null)
         {
